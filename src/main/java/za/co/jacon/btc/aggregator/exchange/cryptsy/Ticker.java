@@ -1,29 +1,33 @@
 package za.co.jacon.btc.aggregator.exchange.cryptsy;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Represents a single ticker result returned by cryptsy.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Ticker {
 
     protected final TopValueIndicator topSell;
     protected final TopValueIndicator topBuy;
     protected final Long timestamp;
-    protected final Date dateTime;
     protected final Integer marketId;
 
     /**
      * Class constructor.
      * @param timestamp the timestamp at which the ticked
-     * @param dateTime
      * @param marketId
      * @param topSell
      * @param topBuy
      */
-    public Ticker(Long timestamp, Date dateTime, Integer marketId, TopValueIndicator topSell, TopValueIndicator topBuy) {
+    public Ticker(
+            @JsonProperty("timestamp") Long timestamp,
+            @JsonProperty("marketid") Integer marketId,
+            @JsonProperty("topsell") TopValueIndicator topSell,
+            @JsonProperty("topbuy") TopValueIndicator topBuy) {
+
         this. timestamp = timestamp;
-        this.dateTime = dateTime;
         this.marketId = marketId;
         this. topSell = topSell;
         this.topBuy = topBuy;
@@ -35,14 +39,6 @@ public class Ticker {
      */
     public Long getTimestamp() {
         return this.timestamp;
-    }
-
-    /**
-     * The event date as java Date object.
-     * @return the event date
-     */
-    public Date getDateTime() {
-        return this.dateTime;
     }
 
     /**

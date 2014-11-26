@@ -1,5 +1,7 @@
 package za.co.jacon.btc.aggregator.exchange.cryptsy;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 
 /**
@@ -15,7 +17,10 @@ public class TopValueIndicator {
      * @param price
      * @param quantity
      */
-    public TopValueIndicator(BigDecimal price, BigDecimal quantity) {
+    public TopValueIndicator(
+        @JsonProperty("price") BigDecimal price,
+        @JsonProperty("quantity") BigDecimal  quantity) {
+
         this.price = price;
         this.quantity = quantity;
     }

@@ -1,6 +1,8 @@
 package za.co.jacon.btc.aggregator.exchange.cryptsy;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonObject;
 import com.pusher.client.Pusher;
 import com.pusher.client.channel.Channel;
 import com.pusher.client.channel.SubscriptionEventListener;
@@ -10,6 +12,8 @@ import com.pusher.client.connection.ConnectionStateChange;
 import org.apache.log4j.Logger;
 import za.co.jacon.btc.aggregator.exchange.accumulator.Accumulator;
 import za.co.jacon.btc.aggregator.exchange.distributor.Distributor;
+
+import java.io.IOException;
 
 /**
  * The cryptsy accumulator.
@@ -52,6 +56,18 @@ public class CryptsyAccumulator implements Accumulator, ConnectionEventListener,
     @Override
     public void onEvent(String channelName, String eventName, String data) {
         LOGGER.info("Event received from " + channelName + ", event name was " + eventName + ": " + data);
+
+        try {
+            JsonNode rootNode = mapper.readValue(data, JsonNode.class);
+            JsonNode jsonNode = rootNode.get("trade");
+
+            Ticker ticker = mapper.readValue(jsonNode.toString(), Ticker.class);
+
+            LOGGER.info(ticker.getTopSell().getPrice());
+
+        } catch (IOException e) {
+            LOGGER.error("Unable to convert ticker json data to Ticker POJO. " + e.getMessage());
+        }
     }
 
     @Override

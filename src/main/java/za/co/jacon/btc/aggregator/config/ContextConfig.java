@@ -19,8 +19,8 @@ import java.util.List;
 public class ContextConfig {
 
     @Bean
-    public Accumulator cryptsyAccumulator() {
-        return new CryptsyAccumulator(new Pusher("cb65d0a7a72cd94adf1f"), "ticker.2");
+    public Accumulator cryptsyAccumulator(ObjectMapper mapper) {
+        return new CryptsyAccumulator(new Pusher("cb65d0a7a72cd94adf1f"), "ticker.2", mapper);
     }
 
     @Bean
