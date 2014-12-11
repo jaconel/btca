@@ -23,6 +23,9 @@ public class BitfinexAccumulator extends PollingAccumulator {
      */
     public BitfinexAccumulator(final BitfinexApi api, final int pollDelay) {
         super(pollDelay);
+
+        LOGGER.debug("Initiating " + BitfinexAccumulator.class + " with delay " + pollDelay);
+
         this.api = api;
     }
 

@@ -26,6 +26,8 @@ public class BitstampAccumulator extends PusherAccumulator {
     public BitstampAccumulator(final Pusher pusherApi, final String channel, final String event, final ObjectMapper mapper) {
         super(pusherApi, channel, event);
 
+        LOGGER.debug("Initiating " + BitstampAccumulator.class);
+
         this.mapper = mapper;
     }
 

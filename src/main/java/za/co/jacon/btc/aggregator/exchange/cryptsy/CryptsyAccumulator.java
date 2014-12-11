@@ -32,8 +32,6 @@ public class CryptsyAccumulator extends PusherAccumulator {
 
     @Override
     public void onEvent(String channelName, String eventName, String data) {
-        LOGGER.info("Cryptsy Event received from " + channelName + ", event name was " + eventName + ": " + data);
-
         try {
             JsonNode rootNode = mapper.readValue(data, JsonNode.class);
             JsonNode jsonNode = rootNode.get("trade");

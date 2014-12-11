@@ -21,8 +21,6 @@ public class BitXApiImpl implements BitXApi {
 
     @Override
     public Ticker ticker() {
-        LOGGER.info("Calling BitX api to retrieve ticker data");
-
         Ticker ticker = null;
         try {
             ticker = this.rest.getForObject(API_URL + "/1/ticker?pair=XBTUSD", Ticker.class);
