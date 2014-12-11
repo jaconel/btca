@@ -1,9 +1,9 @@
-package za.co.jacon.btc.aggregator.exchange.api;
+package za.co.jacon.btc.aggregator.exchange.btx;
 
 /**
  * API for integrating with the BitX exchange.
  */
 public interface BitXApi {
 
-    public void doSomething();
+    public Ticker ticker();
 }

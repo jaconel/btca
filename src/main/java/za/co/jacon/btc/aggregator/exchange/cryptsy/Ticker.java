@@ -29,7 +29,7 @@ public class Ticker {
 
         this. timestamp = timestamp;
         this.marketId = marketId;
-        this. topSell = topSell;
+        this.topSell = topSell;
         this.topBuy = topBuy;
     }
 
