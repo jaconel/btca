@@ -14,6 +14,9 @@ import za.co.jacon.btc.aggregator.exchange.bitfinex.BitfinexAccumulator;
 import za.co.jacon.btc.aggregator.exchange.bitfinex.BitfinexApi;
 import za.co.jacon.btc.aggregator.exchange.bitfinex.BitfinexApiImpl;
 import za.co.jacon.btc.aggregator.exchange.bitstamp.BitstampAccumulator;
+import za.co.jacon.btc.aggregator.exchange.btce.BtceAccumulator;
+import za.co.jacon.btc.aggregator.exchange.btce.BtceApi;
+import za.co.jacon.btc.aggregator.exchange.btce.BtceApiImpl;
 import za.co.jacon.btc.aggregator.exchange.btx.BitXAccumulator;
 import za.co.jacon.btc.aggregator.exchange.btx.BitXApi;
 import za.co.jacon.btc.aggregator.exchange.btx.BitXApiImpl;
@@ -30,6 +33,7 @@ import java.util.List;
 @Configuration
 public class ContextConfig {
 
+    /*
     @Bean
     public Accumulator cryptsyAccumulator(final Environment environment, final ObjectMapper mapper) {
         final String pusherKey = environment.getRequiredProperty("exchange.crypsty.accumulator.pusher_key", String.class);
@@ -49,7 +53,7 @@ public class ContextConfig {
     }
 
     @Bean
-    public BitXAccumulator bitXAccumulator(final Environment environment, final BitXApi bitXApi) {
+    public Accumulator bitXAccumulator(final Environment environment, final BitXApi bitXApi) {
         final int pollDelay = environment.getRequiredProperty("exchange.bitx.accumulator.poll_delay_in_seconds", Integer.class);
         return new BitXAccumulator(bitXApi, pollDelay);
     }
@@ -60,7 +64,7 @@ public class ContextConfig {
     }
 
     @Bean
-    public BitfinexAccumulator bitfinexAccumulator(final Environment environment, final BitfinexApi bitfinexApi) {
+    public Accumulator bitfinexAccumulator(final Environment environment, final BitfinexApi bitfinexApi) {
         final int pollDelay = environment.getRequiredProperty("exchange.bitfinex.accumulator.poll_delay_in_seconds", Integer.class);
         return new BitfinexAccumulator(bitfinexApi, pollDelay);
     }
@@ -68,6 +72,18 @@ public class ContextConfig {
     @Bean
     public BitfinexApi bitfinexApi(final RestOperations restOperations) {
         return new BitfinexApiImpl(restOperations);
+    }
+    */
+
+    @Bean
+    public Accumulator btceAccumulator(Environment environment, BtceApi api) {
+        final int pollDelay = environment.getRequiredProperty("exchange.btce.accumulator.poll_delay_in_seconds", Integer.class);
+        return new BtceAccumulator(api, pollDelay);
+    }
+
+    @Bean
+    public BtceApi btceApi(final RestOperations restOperations, final ObjectMapper objectMapper) {
+        return new BtceApiImpl(restOperations, objectMapper);
     }
 
     @Bean
