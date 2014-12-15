@@ -14,7 +14,7 @@ import za.co.jacon.btc.aggregator.exchange.distributor.Distributor;
  *
  * All objects extending the PusherAccumulator is expected to implement the onEvent().
  */
-public abstract class PusherAccumulator implements Accumulator, ConnectionEventListener, SubscriptionEventListener {
+public abstract class PusherAccumulator extends AbstractAccumulator implements  ConnectionEventListener, SubscriptionEventListener {
 
     protected final Pusher pusher;
     protected final String channel;
@@ -28,11 +28,14 @@ public abstract class PusherAccumulator implements Accumulator, ConnectionEventL
      *
      * Initializes the pusher api etc.
      *
+     * @param distributor the message distributor
      * @param pusherApi the configured pusher api
      * @param channel the channel to which to subscribe
      * @param event the event to which to bind
      */
-    public PusherAccumulator(final Pusher pusherApi, final String channel, final String event) {
+    public PusherAccumulator(final Distributor distributor, final Pusher pusherApi, final String channel, final String event) {
+        super(distributor);
+
         this.pusher = pusherApi;
         this.channel = channel;
         this.event = event;
@@ -44,10 +47,13 @@ public abstract class PusherAccumulator implements Accumulator, ConnectionEventL
      *
      * Initializes the pusher api etc.
      *
+     * @param distributor the message distributor
      * @param pusherApi the configured pusher api
      * @param channel the channel to which to subscribe
      */
-    public PusherAccumulator(final Pusher pusherApi, final String channel) {
+    public PusherAccumulator(final Distributor distributor, final Pusher pusherApi, final String channel) {
+        super(distributor);
+
         this.pusher = pusherApi;
         this.channel = channel;
         this.event = null;

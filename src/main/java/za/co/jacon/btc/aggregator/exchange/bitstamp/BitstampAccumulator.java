@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pusher.client.Pusher;
 import org.apache.log4j.Logger;
 import za.co.jacon.btc.aggregator.exchange.accumulator.PusherAccumulator;
+import za.co.jacon.btc.aggregator.exchange.distributor.Distributor;
 
 import java.io.IOException;
 
@@ -21,10 +22,14 @@ public class BitstampAccumulator extends PusherAccumulator {
     /**
      * Instantiate the cryptsy accumulator with the configured Pusher api.
      *
+     * @param distributor the message distributor
      * @param pusherApi the configured pusher api
+     * @param channel the pusher channel to connect to
+     * @param event the pusher event to bid to
+     * @param mapper the object mapper for message serialization
      */
-    public BitstampAccumulator(final Pusher pusherApi, final String channel, final String event, final ObjectMapper mapper) {
-        super(pusherApi, channel, event);
+    public BitstampAccumulator(final Distributor distributor, final Pusher pusherApi, final String channel, final String event, final ObjectMapper mapper) {
+        super(distributor, pusherApi, channel, event);
 
         LOGGER.debug("Initiating " + BitstampAccumulator.class);
 
@@ -38,7 +43,7 @@ public class BitstampAccumulator extends PusherAccumulator {
         try {
             Ticker ticker = mapper.readValue(data, Ticker.class);
 
-            LOGGER.info(ticker.getPrice());
+            this.distributor.distribute(ticker, "bitstamp");
         } catch (IOException e) {
             LOGGER.error("Unable to convert ticker json data to Ticker POJO. " + e.getMessage());
         }

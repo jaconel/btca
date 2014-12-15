@@ -2,6 +2,7 @@ package za.co.jacon.btc.aggregator.exchange.btce;
 
 import org.apache.log4j.Logger;
 import za.co.jacon.btc.aggregator.exchange.accumulator.PollingAccumulator;
+import za.co.jacon.btc.aggregator.exchange.distributor.Distributor;
 
 /**
  * The BTC-e accumulator.
@@ -18,11 +19,12 @@ public class BtceAccumulator extends PollingAccumulator {
      *
      * Allows the injection of the BTCe api implementation.
      *
+     * @param distributor the message distributor
      * @param api the api implementation
      * @param pollDelay how often to poll the exchange for ticker data.
      */
-    public BtceAccumulator(final BtceApi api, final int pollDelay) {
-        super(pollDelay);
+    public BtceAccumulator(final Distributor distributor, final BtceApi api, final int pollDelay) {
+        super(distributor, pollDelay);
 
         LOGGER.debug("Initiating " + BtceAccumulator.class + " with delay of " + pollDelay + " seconds.");
 
@@ -36,7 +38,7 @@ public class BtceAccumulator extends PollingAccumulator {
     public void run() {
         Ticker ticker = api.ticker();
         if (ticker != null) {
-            LOGGER.info(ticker.getLastPrice());
+            this.distributor.distribute(ticker, "btce");
         }
     }
 }

@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * The polling accumulator class.
  */
-public abstract class PollingAccumulator implements Accumulator, Runnable {
+public abstract class PollingAccumulator extends AbstractAccumulator implements Runnable {
 
     protected final int pollDelay;
 
@@ -30,7 +30,9 @@ public abstract class PollingAccumulator implements Accumulator, Runnable {
      *
      * @param pollDelay the polling delay
      */
-    public PollingAccumulator(final int pollDelay) {
+    public PollingAccumulator(final Distributor distributor, final int pollDelay) {
+        super(distributor);
+
         this.pollDelay = pollDelay;
     }
 

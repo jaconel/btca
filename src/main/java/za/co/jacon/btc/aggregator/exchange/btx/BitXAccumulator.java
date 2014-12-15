@@ -3,11 +3,12 @@ package za.co.jacon.btc.aggregator.exchange.btx;
 import org.apache.log4j.Logger;
 import za.co.jacon.btc.aggregator.exchange.accumulator.Accumulator;
 import za.co.jacon.btc.aggregator.exchange.accumulator.PollingAccumulator;
+import za.co.jacon.btc.aggregator.exchange.distributor.Distributor;
 
 /**
  * Accumulator for the BTX exchange.
  */
-public class BitXAccumulator extends PollingAccumulator implements Accumulator, Runnable {
+public class BitXAccumulator extends PollingAccumulator {
 
     /**
      * Logger instance. Makes use of log4j logger factory to instantiate an instance specific for this class.
@@ -23,10 +24,13 @@ public class BitXAccumulator extends PollingAccumulator implements Accumulator, 
 
     /**
      * Class constructor.
+     *
+     * @param distributor the message distributor.
      * @param api the bitx api implementation.
+     * @param pollDelay how often should we poll the exchange for data
      */
-    public BitXAccumulator(BitXApi api, int pollDelay) {
-        super(pollDelay);
+    public BitXAccumulator(final Distributor distributor, final BitXApi api, final int pollDelay) {
+        super(distributor, pollDelay);
 
         LOGGER.debug("Initiating " + BitXAccumulator.class + " with delay of " + pollDelay + " seconds.");
 
@@ -43,7 +47,7 @@ public class BitXAccumulator extends PollingAccumulator implements Accumulator, 
     public void run() {
         Ticker ticker = api.ticker();
         if (ticker != null) {
-            LOGGER.info(ticker.getAsk());
+            this.distributor.distribute(ticker, "bitx");
         }
     }
 }

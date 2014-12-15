@@ -2,8 +2,10 @@ package za.co.jacon.btc.aggregator.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pusher.client.Pusher;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestOperations;
@@ -31,31 +33,32 @@ import java.util.List;
  * Context configuration for setting up spring dependency injection.
  */
 @Configuration
+@Import(AMQPConfig.class)
 public class ContextConfig {
 
-    /*
+
     @Bean
-    public Accumulator cryptsyAccumulator(final Environment environment, final ObjectMapper mapper) {
+    public Accumulator cryptsyAccumulator(final Environment environment, final ObjectMapper mapper, final Distributor distributor) {
         final String pusherKey = environment.getRequiredProperty("exchange.crypsty.accumulator.pusher_key", String.class);
         final String pusherChannel = environment.getRequiredProperty("exchange.crypsty.accumulator.pusher_channel", String.class);
         final String pusherEvent = environment.getRequiredProperty("exchange.crypsty.accumulator.pusher_event", String.class);
 
-        return new CryptsyAccumulator(new Pusher(pusherKey), pusherChannel, pusherEvent, mapper);
+        return new CryptsyAccumulator(distributor, new Pusher(pusherKey), pusherChannel, pusherEvent, mapper);
     }
 
     @Bean
-    public Accumulator bitstampAccumulator(final Environment environment, final ObjectMapper mapper) {
+    public Accumulator bitstampAccumulator(final Environment environment, final ObjectMapper mapper, final Distributor distributor) {
         final String pusherKey = environment.getRequiredProperty("exchange.bitstamp.accumulator.pusher_key", String.class);
         final String pusherChannel = environment.getRequiredProperty("exchange.bitstamp.accumulator.pusher_channel", String.class);
         final String pusherEvent = environment.getRequiredProperty("exchange.bitstamp.accumulator.pusher_event", String.class);
 
-        return new BitstampAccumulator(new Pusher(pusherKey), pusherChannel, pusherEvent, mapper);
+        return new BitstampAccumulator(distributor, new Pusher(pusherKey), pusherChannel, pusherEvent, mapper);
     }
 
     @Bean
-    public Accumulator bitXAccumulator(final Environment environment, final BitXApi bitXApi) {
+    public Accumulator bitXAccumulator(final Environment environment, final BitXApi bitXApi, final Distributor distributor) {
         final int pollDelay = environment.getRequiredProperty("exchange.bitx.accumulator.poll_delay_in_seconds", Integer.class);
-        return new BitXAccumulator(bitXApi, pollDelay);
+        return new BitXAccumulator(distributor, bitXApi, pollDelay);
     }
 
     @Bean
@@ -64,21 +67,20 @@ public class ContextConfig {
     }
 
     @Bean
-    public Accumulator bitfinexAccumulator(final Environment environment, final BitfinexApi bitfinexApi) {
+    public Accumulator bitfinexAccumulator(final Environment environment, final BitfinexApi bitfinexApi, final Distributor distributor) {
         final int pollDelay = environment.getRequiredProperty("exchange.bitfinex.accumulator.poll_delay_in_seconds", Integer.class);
-        return new BitfinexAccumulator(bitfinexApi, pollDelay);
+        return new BitfinexAccumulator(distributor, bitfinexApi, pollDelay);
     }
 
     @Bean
     public BitfinexApi bitfinexApi(final RestOperations restOperations) {
         return new BitfinexApiImpl(restOperations);
     }
-    */
 
     @Bean
-    public Accumulator btceAccumulator(Environment environment, BtceApi api) {
+    public Accumulator btceAccumulator(final Environment environment, final BtceApi api, final Distributor distributor) {
         final int pollDelay = environment.getRequiredProperty("exchange.btce.accumulator.poll_delay_in_seconds", Integer.class);
-        return new BtceAccumulator(api, pollDelay);
+        return new BtceAccumulator(distributor, api, pollDelay);
     }
 
     @Bean
@@ -101,8 +103,8 @@ public class ContextConfig {
     }
 
     @Bean
-    public Distributor getAMQPDistributor() {
-        return new AMQPDistributor();
+    public Distributor getAMQPDistributor(final AmqpTemplate amqpTemplate) {
+        return new AMQPDistributor(amqpTemplate);
     }
 
     @Bean

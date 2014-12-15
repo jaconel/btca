@@ -2,6 +2,7 @@ package za.co.jacon.btc.aggregator.exchange.bitfinex;
 
 import org.apache.log4j.Logger;
 import za.co.jacon.btc.aggregator.exchange.accumulator.PollingAccumulator;
+import za.co.jacon.btc.aggregator.exchange.distributor.Distributor;
 
 /**
  * The Bitfinex accumulator.
@@ -18,11 +19,12 @@ public class BitfinexAccumulator extends PollingAccumulator {
      * Class constructor.
      *
      * Sets up the accumulator to start accumulating information. The accumulator is not started on construct.
+     * @param distributor the message distributor
      * @param api the bitnex api implementation
      * @param pollDelay how often to poll the api for the latest information.
      */
-    public BitfinexAccumulator(final BitfinexApi api, final int pollDelay) {
-        super(pollDelay);
+    public BitfinexAccumulator(final Distributor distributor, final BitfinexApi api, final int pollDelay) {
+        super(distributor, pollDelay);
 
         LOGGER.debug("Initiating " + BitfinexAccumulator.class + " with delay " + pollDelay);
 
@@ -39,7 +41,7 @@ public class BitfinexAccumulator extends PollingAccumulator {
     public void run() {
         Ticker ticker = api.ticker();
         if (ticker != null) {
-            LOGGER.info(ticker.getAsk());
+            this.distributor.distribute(ticker, "bitfinex");
         }
     }
 }
