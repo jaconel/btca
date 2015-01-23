@@ -23,8 +23,8 @@ import za.co.jacon.btc.aggregator.exchange.btx.BitXAccumulator;
 import za.co.jacon.btc.aggregator.exchange.btx.BitXApi;
 import za.co.jacon.btc.aggregator.exchange.btx.BitXApiImpl;
 import za.co.jacon.btc.aggregator.exchange.cryptsy.CryptsyAccumulator;
-import za.co.jacon.btc.aggregator.exchange.distributor.AMQPDistributor;
-import za.co.jacon.btc.aggregator.exchange.distributor.Distributor;
+import za.co.jacon.btc.aggregator.distributor.AMQPDistributor;
+import za.co.jacon.btc.aggregator.distributor.Distributor;
 import za.co.jacon.btc.aggregator.rest.ResponseErrorHandler;
 
 import java.util.List;

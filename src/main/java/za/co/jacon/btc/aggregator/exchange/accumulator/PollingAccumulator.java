@@ -1,6 +1,6 @@
 package za.co.jacon.btc.aggregator.exchange.accumulator;
 
-import za.co.jacon.btc.aggregator.exchange.distributor.Distributor;
+import za.co.jacon.btc.aggregator.distributor.Distributor;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;

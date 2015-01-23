@@ -2,7 +2,7 @@ package za.co.jacon.btc.aggregator.exchange.bitfinex;
 
 import org.apache.log4j.Logger;
 import za.co.jacon.btc.aggregator.exchange.accumulator.PollingAccumulator;
-import za.co.jacon.btc.aggregator.exchange.distributor.Distributor;
+import za.co.jacon.btc.aggregator.distributor.Distributor;
 
 /**
  * The Bitfinex accumulator.

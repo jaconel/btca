@@ -7,7 +7,7 @@ import com.pusher.client.connection.ConnectionEventListener;
 import com.pusher.client.connection.ConnectionState;
 import com.pusher.client.connection.ConnectionStateChange;
 import org.apache.log4j.Logger;
-import za.co.jacon.btc.aggregator.exchange.distributor.Distributor;
+import za.co.jacon.btc.aggregator.distributor.Distributor;
 
 /**
  * Accumulator that makes use of the pusher api for receiving ticker data over a websocket.

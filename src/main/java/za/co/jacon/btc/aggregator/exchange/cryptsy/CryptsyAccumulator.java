@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pusher.client.Pusher;
 import org.apache.log4j.Logger;
 import za.co.jacon.btc.aggregator.exchange.accumulator.PusherAccumulator;
-import za.co.jacon.btc.aggregator.exchange.distributor.Distributor;
+import za.co.jacon.btc.aggregator.distributor.Distributor;
 
 import java.io.IOException;
 

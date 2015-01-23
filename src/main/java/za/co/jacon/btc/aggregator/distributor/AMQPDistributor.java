@@ -1,4 +1,4 @@
-package za.co.jacon.btc.aggregator.exchange.distributor;
+package za.co.jacon.btc.aggregator.distributor;
 
 import org.springframework.amqp.core.AmqpTemplate;
 

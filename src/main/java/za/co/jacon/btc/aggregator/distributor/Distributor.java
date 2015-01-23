@@ -1,4 +1,4 @@
-package za.co.jacon.btc.aggregator.exchange.distributor;
+package za.co.jacon.btc.aggregator.distributor;
 
 /**
  * The distributor interface.

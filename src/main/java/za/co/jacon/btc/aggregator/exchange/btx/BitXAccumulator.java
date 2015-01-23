@@ -1,9 +1,8 @@
 package za.co.jacon.btc.aggregator.exchange.btx;
 
 import org.apache.log4j.Logger;
-import za.co.jacon.btc.aggregator.exchange.accumulator.Accumulator;
 import za.co.jacon.btc.aggregator.exchange.accumulator.PollingAccumulator;
-import za.co.jacon.btc.aggregator.exchange.distributor.Distributor;
+import za.co.jacon.btc.aggregator.distributor.Distributor;
 
 /**
  * Accumulator for the BTX exchange.
