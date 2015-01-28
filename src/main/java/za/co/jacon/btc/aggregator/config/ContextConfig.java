@@ -1,12 +1,16 @@
 package za.co.jacon.btc.aggregator.config;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.pusher.client.Pusher;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
@@ -27,6 +31,7 @@ import za.co.jacon.btc.aggregator.distributor.AMQPDistributor;
 import za.co.jacon.btc.aggregator.distributor.Distributor;
 import za.co.jacon.btc.aggregator.rest.ResponseErrorHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,7 +42,7 @@ import java.util.List;
 public class ContextConfig {
 
 
-    @Bean
+   /* @Bean
     public Accumulator cryptsyAccumulator(final Environment environment, final ObjectMapper mapper, final Distributor distributor) {
         final String pusherKey = environment.getRequiredProperty("exchange.crypsty.accumulator.pusher_key", String.class);
         final String pusherChannel = environment.getRequiredProperty("exchange.crypsty.accumulator.pusher_channel", String.class);
@@ -64,7 +69,7 @@ public class ContextConfig {
     @Bean
     public BitXApi bitXApi(final RestOperations restOperations) {
         return new BitXApiImpl(restOperations);
-    }
+    }*/
 
     @Bean
     public Accumulator bitfinexAccumulator(final Environment environment, final BitfinexApi bitfinexApi, final Distributor distributor) {
@@ -73,11 +78,11 @@ public class ContextConfig {
     }
 
     @Bean
-    public BitfinexApi bitfinexApi(final RestOperations restOperations) {
-        return new BitfinexApiImpl(restOperations);
+    public BitfinexApi bitfinexApi(final RestOperations restOperations, final ObjectMapper objectMapper) {
+        return new BitfinexApiImpl(restOperations, objectMapper);
     }
 
-    @Bean
+    /*@Bean
     public Accumulator btceAccumulator(final Environment environment, final BtceApi api, final Distributor distributor) {
         final int pollDelay = environment.getRequiredProperty("exchange.btce.accumulator.poll_delay_in_seconds", Integer.class);
         return new BtceAccumulator(distributor, api, pollDelay);
@@ -86,12 +91,15 @@ public class ContextConfig {
     @Bean
     public BtceApi btceApi(final RestOperations restOperations, final ObjectMapper objectMapper) {
         return new BtceApiImpl(restOperations, objectMapper);
-    }
+    }*/
 
     @Bean
     public RestOperations restTemplate(final MappingJackson2HttpMessageConverter jackson2HttpMessageConverter, final ResponseErrorHandler errorHandler) {
+        List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
+        messageConverters.add(jackson2HttpMessageConverter);
+
         RestTemplate rest = new RestTemplate();
-        rest.getMessageConverters().add(0, jackson2HttpMessageConverter);
+        rest.setMessageConverters(messageConverters);
         rest.setErrorHandler(errorHandler);
 
         return rest;
@@ -114,7 +122,13 @@ public class ContextConfig {
 
     @Bean
     public ObjectMapper getObjectMapper() {
-        return new ObjectMapper();
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        mapper.enable(SerializationFeature.CLOSE_CLOSEABLE);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        return mapper;
     }
 
     @Bean

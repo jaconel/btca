@@ -20,6 +20,7 @@ public class ResponseErrorHandler implements org.springframework.web.client.Resp
     }
 
     public void handleError(ClientHttpResponse response) throws IOException {
+        // TODO: raise an IOException containing info describing why the failure occurred.
         LOGGER.error("An error occurred during rest operations. Status code returned was " + response.getRawStatusCode() + "(" + response.getStatusText() + ").");
     }
 }

@@ -3,6 +3,10 @@ package za.co.jacon.btc.aggregator.exchange.bitfinex;
 import org.apache.log4j.Logger;
 import za.co.jacon.btc.aggregator.exchange.accumulator.PollingAccumulator;
 import za.co.jacon.btc.aggregator.distributor.Distributor;
+import za.co.jacon.btc.aggregator.exchange.bitfinex.vo.TickerVO;
+import za.co.jacon.btc.aggregator.exchange.bitfinex.vo.TransactionVO;
+
+import java.util.List;
 
 /**
  * The Bitfinex accumulator.
@@ -39,9 +43,13 @@ public class BitfinexAccumulator extends PollingAccumulator {
      */
     @Override
     public void run() {
-        Ticker ticker = api.ticker();
-        if (ticker != null) {
-            this.distributor.distribute(ticker, "bitfinex");
-        }
+        /*TickerVO tickerVO = api.ticker();
+        if (tickerVO != null) {
+            this.distributor.distribute(tickerVO, "bitfinex");
+        }*/
+
+        TransactionVO transaction = api.getLatestTransaction();
+
+        LOGGER.info("Latest transaction for bitfinex was for " + transaction.getPrice());
     }
 }

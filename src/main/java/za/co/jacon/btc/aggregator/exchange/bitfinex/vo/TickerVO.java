@@ -1,4 +1,4 @@
-package za.co.jacon.btc.aggregator.exchange.bitfinex;
+package za.co.jacon.btc.aggregator.exchange.bitfinex.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 /**
  * Representation of the ticker data received from the Bitfinex exhange's api.
  */
-public class Ticker {
+public class TickerVO {
 
     private final BigDecimal averagePrice;
     private final BigDecimal bid;
@@ -18,7 +18,7 @@ public class Ticker {
     private final BigDecimal volume;
     private final BigDecimal timestamp;
 
-    public Ticker(
+    public TickerVO(
         @JsonProperty("mid") final BigDecimal averagePrice,
         @JsonProperty("bid") final BigDecimal bid,
         @JsonProperty("ask") final BigDecimal ask,
