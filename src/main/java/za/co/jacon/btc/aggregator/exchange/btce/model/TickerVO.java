@@ -1,4 +1,4 @@
-package za.co.jacon.btc.aggregator.exchange.btce;
+package za.co.jacon.btc.aggregator.exchange.btce.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 /**
  * Represents the ticker data returned by the btce exchange's api.
  */
-public class Ticker {
+public class TickerVO {
 
     private final BigDecimal highestPrice;
     private final BigDecimal lowestPrice;
@@ -31,16 +31,16 @@ public class Ticker {
      * @param sellPrice the last ask price.
      * @param timestamp the timestamp
      */
-    public Ticker(
-        @JsonProperty("high") final BigDecimal highestPrice,
-        @JsonProperty("low") final BigDecimal lowestPrice,
-        @JsonProperty("avg") final BigDecimal averagePrice,
-        @JsonProperty("vol") final BigDecimal tradeVolume,
-        @JsonProperty("vol_cur") final BigDecimal tradeVolumeInCurrency,
-        @JsonProperty("last") final BigDecimal lastPrice,
-        @JsonProperty("buy") final BigDecimal buyPrice,
-        @JsonProperty("sell") final BigDecimal sellPrice,
-        @JsonProperty("updated") final BigDecimal timestamp) {
+    public TickerVO(
+            @JsonProperty("high") final BigDecimal highestPrice,
+            @JsonProperty("low") final BigDecimal lowestPrice,
+            @JsonProperty("avg") final BigDecimal averagePrice,
+            @JsonProperty("vol") final BigDecimal tradeVolume,
+            @JsonProperty("vol_cur") final BigDecimal tradeVolumeInCurrency,
+            @JsonProperty("last") final BigDecimal lastPrice,
+            @JsonProperty("buy") final BigDecimal buyPrice,
+            @JsonProperty("sell") final BigDecimal sellPrice,
+            @JsonProperty("updated") final BigDecimal timestamp) {
 
         this.highestPrice = highestPrice;
         this.lowestPrice = lowestPrice;

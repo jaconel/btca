@@ -1,13 +1,20 @@
-package za.co.jacon.btc.aggregator.exchange.bitstamp.api;
+package za.co.jacon.btc.aggregator.exchange.btce.api;
 
-import za.co.jacon.btc.aggregator.exchange.bitstamp.model.TransactionVO;
+import za.co.jacon.btc.aggregator.exchange.btce.model.TransactionVO;
+import za.co.jacon.btc.aggregator.exchange.btce.model.TickerVO;
 
 import java.util.List;
 
 /**
- * Interface defining a bitstamp api implementation.
+ * Defines the interface to the BTC-e exchange.
  */
-public interface BitstampApi {
+public interface BtceApi {
+
+    /**
+     * Retrieves the ticker data from the exchange.
+     * @return the ticker data.
+     */
+    public TickerVO ticker();
 
     /**
      * Retrieves a list of the latest transactions from the exchange.

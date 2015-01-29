@@ -1,4 +1,4 @@
-package za.co.jacon.btc.aggregator.exchange.cryptsy;
+package za.co.jacon.btc.aggregator.exchange.cryptsy.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

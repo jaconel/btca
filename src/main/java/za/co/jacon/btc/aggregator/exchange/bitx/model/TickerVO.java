@@ -1,4 +1,4 @@
-package za.co.jacon.btc.aggregator.exchange.btx;
+package za.co.jacon.btc.aggregator.exchange.bitx.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 /**
  * BitX ticker object.
  */
-public class Ticker {
+public class TickerVO {
 
     protected BigDecimal ask;
     protected BigDecimal bid;
@@ -16,13 +16,13 @@ public class Ticker {
     protected Double rolling24HourVolume;
     protected String pair;
 
-    public Ticker(
-        @JsonProperty("ask") BigDecimal ask,
-        @JsonProperty("bid") BigDecimal bid,
-        @JsonProperty("timestamp") long timestamp,
-        @JsonProperty("last_trade") BigDecimal lastTrade,
-        @JsonProperty("rolling_24_hour_volume") Double rolling24HourVolume,
-        @JsonProperty("pair") String pair) {
+    public TickerVO(
+            @JsonProperty("ask") BigDecimal ask,
+            @JsonProperty("bid") BigDecimal bid,
+            @JsonProperty("timestamp") long timestamp,
+            @JsonProperty("last_trade") BigDecimal lastTrade,
+            @JsonProperty("rolling_24_hour_volume") Double rolling24HourVolume,
+            @JsonProperty("pair") String pair) {
 
         this.ask = ask;
         this.bid = bid;

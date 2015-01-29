@@ -1,8 +1,10 @@
-package za.co.jacon.btc.aggregator.exchange.btx;
+package za.co.jacon.btc.aggregator.exchange.bitx.accumulator;
 
 import org.apache.log4j.Logger;
 import za.co.jacon.btc.aggregator.accumulator.PollingAccumulator;
 import za.co.jacon.btc.aggregator.distributor.Distributor;
+import za.co.jacon.btc.aggregator.exchange.bitx.api.BitXApi;
+import za.co.jacon.btc.aggregator.exchange.bitx.model.TickerVO;
 
 /**
  * Accumulator for the BTX exchange.
@@ -44,9 +46,9 @@ public class BitXAccumulator extends PollingAccumulator {
      */
     @Override
     public void run() {
-        Ticker ticker = api.ticker();
-        if (ticker != null) {
-            this.distributor.distribute(ticker, "bitx");
+        TickerVO tickerVO = api.ticker();
+        if (tickerVO != null) {
+            this.distributor.distribute(tickerVO, "bitx");
         }
     }
 }

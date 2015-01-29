@@ -8,10 +8,10 @@ import za.co.jacon.btc.aggregator.exchange.bitfinex.api.BitfinexApi;
 import za.co.jacon.btc.aggregator.exchange.bitfinex.api.BitfinexApiImpl;
 import za.co.jacon.btc.aggregator.exchange.bitstamp.api.BitstampApi;
 import za.co.jacon.btc.aggregator.exchange.bitstamp.api.BitstampApiImpl;
-import za.co.jacon.btc.aggregator.exchange.btce.BtceApi;
-import za.co.jacon.btc.aggregator.exchange.btce.BtceApiImpl;
-import za.co.jacon.btc.aggregator.exchange.btx.BitXApi;
-import za.co.jacon.btc.aggregator.exchange.btx.BitXApiImpl;
+import za.co.jacon.btc.aggregator.exchange.btce.api.BtceApi;
+import za.co.jacon.btc.aggregator.exchange.btce.api.BtceApiImpl;
+import za.co.jacon.btc.aggregator.exchange.bitx.api.BitXApi;
+import za.co.jacon.btc.aggregator.exchange.bitx.api.BitXApiImpl;
 
 /**
  * Configures the exchange api's in the spring dependancy injection container.

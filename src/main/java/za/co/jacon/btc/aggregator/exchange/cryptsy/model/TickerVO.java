@@ -1,4 +1,4 @@
-package za.co.jacon.btc.aggregator.exchange.cryptsy;
+package za.co.jacon.btc.aggregator.exchange.cryptsy.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Represents a single ticker result returned by cryptsy.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Ticker {
+public class TickerVO {
 
     protected final TopValueIndicator topSell;
     protected final TopValueIndicator topBuy;
@@ -21,7 +21,7 @@ public class Ticker {
      * @param topSell
      * @param topBuy
      */
-    public Ticker(
+    public TickerVO(
             @JsonProperty("timestamp") Long timestamp,
             @JsonProperty("marketid") Integer marketId,
             @JsonProperty("topsell") TopValueIndicator topSell,
