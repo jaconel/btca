@@ -1,4 +1,4 @@
-package za.co.jacon.btc.aggregator.exchange.bitfinex.vo;
+package za.co.jacon.btc.aggregator.exchange.bitfinex.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -6,6 +6,8 @@ import java.math.BigDecimal;
 
 /**
  * Representation of the ticker data received from the Bitfinex exhange's api.
+ *
+ * TODO: Look into use an adapter pattern to adapt all TickerVO's into a specific scheme.
  */
 public class TickerVO {
 

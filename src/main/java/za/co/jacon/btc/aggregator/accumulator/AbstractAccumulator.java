@@ -1,4 +1,4 @@
-package za.co.jacon.btc.aggregator.exchange.accumulator;
+package za.co.jacon.btc.aggregator.accumulator;
 
 import za.co.jacon.btc.aggregator.distributor.Distributor;
 

@@ -1,5 +1,7 @@
-package za.co.jacon.btc.aggregator.btc;
+package za.co.jacon.btc.aggregator.exchange.bitfinex.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.RecursiveToStringStyle;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -11,19 +13,32 @@ import java.math.BigDecimal;
 public class TransactionVO {
 
     private final BigDecimal price;
+    private final BigDecimal amount;
     private final long timestamp;
-    private final long transactionId;
+    private final long tid;
+    private String test;
 
     /**
      * Class constructor allows for value injections.
      * @param price
      * @param timestamp
-     * @param transactionId
+     * @param tid
+     * @param amount
      */
-    public TransactionVO(final BigDecimal price, final long timestamp, final long transactionId) {
+    @JsonCreator
+    public TransactionVO(
+            @JsonProperty("price") final BigDecimal price,
+            @JsonProperty("timestamp") final long timestamp,
+            @JsonProperty("tid") final long tid,
+            @JsonProperty("amount") final BigDecimal amount,
+            @JsonProperty("tewst") final String test
+            ) {
+
         this.price = price;
+        this.amount = amount;
         this.timestamp = timestamp;
-        this.transactionId = transactionId;
+        this.tid = tid;
+
     }
 
     /**
@@ -43,7 +58,11 @@ public class TransactionVO {
         return timestamp;
     }
 
-    public long getTransactionId() {
-        return transactionId;
+    public long getTid() {
+        return tid;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
     }
 }

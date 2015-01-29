@@ -1,4 +1,4 @@
-package za.co.jacon.btc.aggregator.exchange.accumulator;
+package za.co.jacon.btc.aggregator.accumulator;
 
 import com.pusher.client.Pusher;
 import com.pusher.client.channel.Channel;

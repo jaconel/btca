@@ -1,4 +1,4 @@
-package za.co.jacon.btc.aggregator.exchange.accumulator;
+package za.co.jacon.btc.aggregator.accumulator;
 
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;

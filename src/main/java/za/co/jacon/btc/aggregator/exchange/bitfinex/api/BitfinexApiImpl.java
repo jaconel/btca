@@ -1,4 +1,4 @@
-package za.co.jacon.btc.aggregator.exchange.bitfinex;
+package za.co.jacon.btc.aggregator.exchange.bitfinex.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
@@ -6,8 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.client.RestOperations;
-import za.co.jacon.btc.aggregator.exchange.bitfinex.vo.TickerVO;
-import za.co.jacon.btc.aggregator.exchange.bitfinex.vo.TransactionVO;
+import za.co.jacon.btc.aggregator.exchange.bitfinex.model.TickerVO;
+import za.co.jacon.btc.aggregator.exchange.bitfinex.model.TransactionVO;
 
 import java.util.Arrays;
 import java.util.Collections;

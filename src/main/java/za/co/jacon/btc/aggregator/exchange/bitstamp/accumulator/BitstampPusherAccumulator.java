@@ -1,10 +1,11 @@
-package za.co.jacon.btc.aggregator.exchange.bitstamp;
+package za.co.jacon.btc.aggregator.exchange.bitstamp.accumulator;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pusher.client.Pusher;
 import org.apache.log4j.Logger;
-import za.co.jacon.btc.aggregator.exchange.accumulator.PusherAccumulator;
+import za.co.jacon.btc.aggregator.accumulator.PusherAccumulator;
 import za.co.jacon.btc.aggregator.distributor.Distributor;
+import za.co.jacon.btc.aggregator.exchange.bitstamp.model.TickerVO;
 
 import java.io.IOException;
 
@@ -13,9 +14,9 @@ import java.io.IOException;
  *
  * Responsible for accumulating bitstamp exchange data and distributing it to the various distributors.
  */
-public class BitstampAccumulator extends PusherAccumulator {
+public class BitstampPusherAccumulator extends PusherAccumulator {
 
-    Logger LOGGER = Logger.getLogger(BitstampAccumulator.class);
+    Logger LOGGER = Logger.getLogger(BitstampPusherAccumulator.class);
 
     private final ObjectMapper mapper;
 
@@ -28,10 +29,10 @@ public class BitstampAccumulator extends PusherAccumulator {
      * @param event the pusher event to bid to
      * @param mapper the object mapper for message serialization
      */
-    public BitstampAccumulator(final Distributor distributor, final Pusher pusherApi, final String channel, final String event, final ObjectMapper mapper) {
+    public BitstampPusherAccumulator(final Distributor distributor, final Pusher pusherApi, final String channel, final String event, final ObjectMapper mapper) {
         super(distributor, pusherApi, channel, event);
 
-        LOGGER.debug("Initiating " + BitstampAccumulator.class);
+        LOGGER.debug("Initiating " + BitstampPusherAccumulator.class);
 
         this.mapper = mapper;
     }
@@ -41,9 +42,9 @@ public class BitstampAccumulator extends PusherAccumulator {
         LOGGER.info("Bitstamp Event received from " + channelName + ", event name was " + eventName + ": " + data);
 
         try {
-            Ticker ticker = mapper.readValue(data, Ticker.class);
+            TickerVO tickerVO = mapper.readValue(data, TickerVO.class);
 
-            this.distributor.distribute(ticker, "bitstamp");
+            this.distributor.distribute(tickerVO, "bitstamp");
         } catch (IOException e) {
             LOGGER.error("Unable to convert ticker json data to Ticker POJO. " + e.getMessage());
         }

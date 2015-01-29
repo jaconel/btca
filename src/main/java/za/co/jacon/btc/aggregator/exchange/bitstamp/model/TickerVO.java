@@ -1,4 +1,4 @@
-package za.co.jacon.btc.aggregator.exchange.bitstamp;
+package za.co.jacon.btc.aggregator.exchange.bitstamp.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 /**
  * POJO representing the ticker data received from bitstamp.
  */
-public class Ticker {
+public class TickerVO {
 
     private final BigDecimal price;
     private final BigDecimal amount;
@@ -20,10 +20,10 @@ public class Ticker {
      * @param amount the trade amount
      * @param id the transaction id
      */
-    public Ticker(
+    public TickerVO(
         @JsonProperty("price") final BigDecimal price,
         @JsonProperty("amount") final BigDecimal amount,
-        @JsonProperty("id")final long id) {
+        @JsonProperty("id") final long id) {
 
         this.price = price;
         this.amount = amount;
