@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import za.co.jacon.btc.aggregator.accumulator.PollingAccumulator;
 import za.co.jacon.btc.aggregator.distributor.Distributor;
 import za.co.jacon.btc.aggregator.exchange.btce.api.BtceApi;
-import za.co.jacon.btc.aggregator.exchange.btce.model.TickerVO;
 import za.co.jacon.btc.aggregator.exchange.btce.model.TransactionVO;
 
 /**
@@ -12,9 +11,9 @@ import za.co.jacon.btc.aggregator.exchange.btce.model.TransactionVO;
  *
  * Responsible for accumulating information from the BTC-e exchange.
  */
-public class BtceAccumulator extends PollingAccumulator {
+public class BtcePriceAccumulator extends PollingAccumulator {
 
-    private static final Logger LOGGER = Logger.getLogger(BtceAccumulator.class);
+    private static final Logger LOGGER = Logger.getLogger(BtcePriceAccumulator.class);
     private final BtceApi api;
 
     /**
@@ -26,10 +25,10 @@ public class BtceAccumulator extends PollingAccumulator {
      * @param api the api implementation
      * @param pollDelay how often to poll the exchange for ticker data.
      */
-    public BtceAccumulator(final Distributor distributor, final BtceApi api, final int pollDelay) {
+    public BtcePriceAccumulator(final Distributor distributor, final BtceApi api, final int pollDelay) {
         super(distributor, pollDelay);
 
-        LOGGER.debug("Initiating " + BtceAccumulator.class + " with delay of " + pollDelay + " seconds.");
+        LOGGER.debug("Initiating " + BtcePriceAccumulator.class + " with delay of " + pollDelay + " seconds.");
 
         this.api = api;
     }

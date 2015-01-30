@@ -9,12 +9,12 @@ import za.co.jacon.btc.aggregator.exchange.bitx.model.TransactionVO;
 /**
  * Accumulator for the BTX exchange.
  */
-public class BitXAccumulator extends PollingAccumulator {
+public class BitXPriceAccumulator extends PollingAccumulator {
 
     /**
      * Logger instance. Makes use of log4j logger factory to instantiate an instance specific for this class.
      */
-    private static final Logger LOGGER = Logger.getLogger(BitXAccumulator.class);
+    private static final Logger LOGGER = Logger.getLogger(BitXPriceAccumulator.class);
 
     /**
      * The bitx api implementation.
@@ -30,10 +30,10 @@ public class BitXAccumulator extends PollingAccumulator {
      * @param api the bitx api implementation.
      * @param pollDelay how often should we poll the exchange for data
      */
-    public BitXAccumulator(final Distributor distributor, final BitXApi api, final int pollDelay) {
+    public BitXPriceAccumulator(final Distributor distributor, final BitXApi api, final int pollDelay) {
         super(distributor, pollDelay);
 
-        LOGGER.debug("Initiating " + BitXAccumulator.class + " with delay of " + pollDelay + " seconds.");
+        LOGGER.debug("Initiating " + BitXPriceAccumulator.class + " with delay of " + pollDelay + " seconds.");
 
         this.api = api;
     }

@@ -8,7 +8,7 @@ import za.co.jacon.btc.aggregator.exchange.okcoin.model.TransactionVO;
 /**
  * Accumulator responsible for accumulating transaction data from the OKCoin exchange.
  */
-public class OKCoinAccumulator extends PollingAccumulator {
+public class OKCoinPriceAccumulator extends PollingAccumulator {
 
     private final OKCoinApi api;
 
@@ -19,7 +19,7 @@ public class OKCoinAccumulator extends PollingAccumulator {
      *
      * @param pollDelay the polling delay
      */
-    public OKCoinAccumulator(Distributor distributor, OKCoinApi api, int pollDelay) {
+    public OKCoinPriceAccumulator(Distributor distributor, OKCoinApi api, int pollDelay) {
         super(distributor, pollDelay);
         this.api = api;
     }

@@ -1,21 +1,19 @@
-package za.co.jacon.btc.aggregator.exchange.bitfinex.accumulator;
+package za.co.jacon.btc.aggregator.exchange.bitstamp.accumulator;
 
 import org.apache.log4j.Logger;
-import za.co.jacon.btc.aggregator.accumulator.PollingAccumulator;
 import za.co.jacon.btc.aggregator.distributor.Distributor;
-import za.co.jacon.btc.aggregator.exchange.bitfinex.api.BitfinexApi;
-import za.co.jacon.btc.aggregator.exchange.bitfinex.model.TransactionVO;
+import za.co.jacon.btc.aggregator.accumulator.PollingAccumulator;
+import za.co.jacon.btc.aggregator.exchange.bitstamp.api.BitstampApi;
+import za.co.jacon.btc.aggregator.exchange.bitstamp.model.TransactionVO;
 
 /**
- * The Bitfinex accumulator.
- *
- * Accumulates information from the Bitfinex exchange and publishes it to the distributors registered in the system.
+ * The bitstamp accumulator responsible for polling the http api.
  */
-public class BitfinexAccumulator extends PollingAccumulator {
+public class BitstampPriceAccumulator extends PollingAccumulator {
 
-    private final Logger LOGGER = Logger.getLogger(BitfinexAccumulator.class);
+    private final Logger LOGGER = Logger.getLogger(BitstampPriceAccumulator.class);
 
-    protected final BitfinexApi api;
+    protected final BitstampApi api;
 
     /**
      * Class constructor.
@@ -25,14 +23,10 @@ public class BitfinexAccumulator extends PollingAccumulator {
      * @param api the bitnex api implementation
      * @param pollDelay how often to poll the api for the latest information.
      */
-    public BitfinexAccumulator(final Distributor distributor, final BitfinexApi api, final int pollDelay) {
+    public BitstampPriceAccumulator(final Distributor distributor, final BitstampApi api, final int pollDelay) {
         super(distributor, pollDelay);
-
-        LOGGER.debug("Initiating " + BitfinexAccumulator.class + " with delay " + pollDelay);
-
         this.api = api;
     }
-
     /**
      * The run method gets called by the scheduled task responsible for polling the bitfinex api. It is responsible
      * for calling the api and converting the response to the correct POJO.
@@ -43,7 +37,7 @@ public class BitfinexAccumulator extends PollingAccumulator {
     public void run() {
         TransactionVO transaction = api.getLatestTransaction();
         if (transaction != null) {
-            this.distributor.distribute(transaction, "bitfinex");
+            distributor.distribute(transaction, "bitstamp");
         }
     }
 }
