@@ -12,9 +12,11 @@ import za.co.jacon.btc.aggregator.exchange.btce.api.BtceApi;
 import za.co.jacon.btc.aggregator.exchange.btce.api.BtceApiImpl;
 import za.co.jacon.btc.aggregator.exchange.bitx.api.BitXApi;
 import za.co.jacon.btc.aggregator.exchange.bitx.api.BitXApiImpl;
+import za.co.jacon.btc.aggregator.exchange.okcoin.api.OKCoinApi;
+import za.co.jacon.btc.aggregator.exchange.okcoin.api.OKCoinApiImpl;
 
 /**
- * Configures the exchange api's in the spring dependancy injection container.
+ * Configures the exchange api's in the spring dependency injection container.
  */
 @Configuration
 public class ExchangeApiConfig {
@@ -27,8 +29,8 @@ public class ExchangeApiConfig {
      * @return the configured bitXApi
      */
     @Bean
-    public BitXApi bitXApi(final RestOperations restOperations) {
-        return new BitXApiImpl(restOperations);
+    public BitXApi bitXApi(final RestOperations restOperations, final ObjectMapper objectMapper) {
+        return new BitXApiImpl(restOperations, objectMapper);
     }
 
     /**
@@ -67,5 +69,19 @@ public class ExchangeApiConfig {
     @Bean
     public BitstampApi bitstampApi(final RestOperations restOperations) {
         return new BitstampApiImpl(restOperations);
+    }
+
+    /**
+     * Configures the okcoin api as a spring bean in the DiC.
+     *
+     * @param restOperations the configured rest operations instance
+     * @param mapper the configured object mapper.
+     *
+     * @return the configure okcoin api
+     */
+    @Bean
+    public OKCoinApi okCoinApi(final RestOperations restOperations, final ObjectMapper mapper) {
+        return new OKCoinApiImpl(restOperations, mapper);
+
     }
 }

@@ -5,6 +5,7 @@ import za.co.jacon.btc.aggregator.accumulator.PollingAccumulator;
 import za.co.jacon.btc.aggregator.distributor.Distributor;
 import za.co.jacon.btc.aggregator.exchange.btce.api.BtceApi;
 import za.co.jacon.btc.aggregator.exchange.btce.model.TickerVO;
+import za.co.jacon.btc.aggregator.exchange.btce.model.TransactionVO;
 
 /**
  * The BTC-e accumulator.
@@ -38,9 +39,9 @@ public class BtceAccumulator extends PollingAccumulator {
      */
     @Override
     public void run() {
-        TickerVO tickerVO = api.ticker();
-        if (tickerVO != null) {
-            this.distributor.distribute(tickerVO, "btce");
+        TransactionVO transaction = api.getLatestTransaction();
+        if (transaction != null) {
+            distributor.distribute(transaction, "btce");
         }
     }
 }

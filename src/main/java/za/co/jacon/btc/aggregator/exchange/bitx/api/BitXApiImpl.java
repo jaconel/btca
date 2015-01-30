@@ -6,11 +6,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestOperations;
 import za.co.jacon.btc.aggregator.exchange.bitx.model.TickerVO;
 import za.co.jacon.btc.aggregator.exchange.bitx.model.TransactionVO;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.List;
 public class BitXApiImpl implements BitXApi {
 
     private final Logger LOGGER = Logger.getLogger(BitXApiImpl.class);
+
     private final RestOperations rest;
     private final ObjectMapper mapper;
 
@@ -49,9 +52,11 @@ public class BitXApiImpl implements BitXApi {
 
     @Override
     public List<TransactionVO> getListOfLatestTransactions() {
+        LOGGER.info("Determined url to be : " + API_URL + "/trades?pair=XBTZAR");
+
         ResponseEntity<String> response = this.rest.getForEntity(API_URL + "/trades?pair=XBTZAR", String.class);
 
-        List<TransactionVO> transactions = null;
+        List<TransactionVO> transactions = new ArrayList<>();
         try {
             JsonNode rootNode = mapper.readValue(response.getBody(), JsonNode.class);
             JsonNode jsonNode = rootNode.get("trades");

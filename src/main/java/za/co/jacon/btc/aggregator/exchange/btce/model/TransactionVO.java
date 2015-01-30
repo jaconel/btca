@@ -1,5 +1,8 @@
 package za.co.jacon.btc.aggregator.exchange.btce.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 
 /**
@@ -12,8 +15,12 @@ public class TransactionVO {
     private final long tid;
     private final long timestamp;
 
+    @JsonCreator
     public TransactionVO(
-            final BigDecimal price, final BigDecimal amount, final long tid, final long timestamp) {
+            @JsonProperty("price") final BigDecimal price,
+            @JsonProperty("amount") final BigDecimal amount,
+            @JsonProperty("tid") final long tid,
+            @JsonProperty("timestamp") final long timestamp) {
 
         this.price = price;
         this.amount = amount;

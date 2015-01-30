@@ -16,7 +16,6 @@ public class TransactionVO {
     private final BigDecimal amount;
     private final long timestamp;
     private final long tid;
-    private String test;
 
     /**
      * Class constructor allows for value injections.
@@ -30,8 +29,7 @@ public class TransactionVO {
             @JsonProperty("price") final BigDecimal price,
             @JsonProperty("timestamp") final long timestamp,
             @JsonProperty("tid") final long tid,
-            @JsonProperty("amount") final BigDecimal amount,
-            @JsonProperty("tewst") final String test
+            @JsonProperty("amount") final BigDecimal amount
             ) {
 
         this.price = price;

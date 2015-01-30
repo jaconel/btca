@@ -25,9 +25,6 @@ public class BitstampAccumulator extends PollingAccumulator {
      */
     public BitstampAccumulator(final Distributor distributor, final BitstampApi api, final int pollDelay) {
         super(distributor, pollDelay);
-
-        LOGGER.debug("Initiating " + BitstampAccumulator.class + " with delay " + pollDelay);
-
         this.api = api;
     }
     /**

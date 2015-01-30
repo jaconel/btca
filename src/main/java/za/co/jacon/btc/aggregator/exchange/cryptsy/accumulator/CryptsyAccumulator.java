@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import za.co.jacon.btc.aggregator.accumulator.PusherAccumulator;
 import za.co.jacon.btc.aggregator.distributor.Distributor;
 import za.co.jacon.btc.aggregator.exchange.cryptsy.model.TickerVO;
+import za.co.jacon.btc.aggregator.exchange.cryptsy.model.TransactionVO;
 
 import java.io.IOException;
 
@@ -30,7 +31,7 @@ public class CryptsyAccumulator extends PusherAccumulator {
      * @param event the push event to bind to
      * @param mapper the object mapper for message serialization
      */
-    public CryptsyAccumulator(final Distributor distributor, final Pusher pusherApi, final String channel, final String event, ObjectMapper mapper) {
+    public CryptsyAccumulator(final Distributor distributor, final Pusher pusherApi, final String channel, final String event, final ObjectMapper mapper) {
         super(distributor, pusherApi, channel, event);
 
         this.mapper = mapper;
@@ -42,9 +43,9 @@ public class CryptsyAccumulator extends PusherAccumulator {
             JsonNode rootNode = mapper.readValue(data, JsonNode.class);
             JsonNode jsonNode = rootNode.get("trade");
 
-            TickerVO tickerVO = mapper.readValue(jsonNode.toString(), TickerVO.class);
+            TransactionVO transaction = mapper.readValue(jsonNode.toString(), TransactionVO.class);
 
-            this.distributor.distribute(tickerVO, "cryptsy");
+            this.distributor.distribute(transaction, "cryptsy");
 
         } catch (IOException e) {
             LOGGER.error("Unable to convert ticker json data to Ticker POJO. " + e.getMessage());
