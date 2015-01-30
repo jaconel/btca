@@ -41,7 +41,7 @@ public class BitstampApiImpl implements BitstampApi {
             LOGGER.error("Non 200 OK status code received for retrieval of trades from bitfinex.");
         }
         List<TransactionVO> transactions = Arrays.asList(response.getBody());
-        Collections.sort(transactions, (tx1, tx2) -> (tx1.getDate() > tx2.getDate()) ? 1 : 0);
+        Collections.sort(transactions, (tx1, tx2) -> (tx1.getTimestamp() > tx2.getTimestamp()) ? 1 : 0);
 
         return transactions;
     }

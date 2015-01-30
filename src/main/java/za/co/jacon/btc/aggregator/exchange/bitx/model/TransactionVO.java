@@ -8,32 +8,22 @@ import java.math.BigDecimal;
 /**
  * Model representing a transaction on the BitX exchange.
  */
-public class TransactionVO {
+public class TransactionVO extends za.co.jacon.btc.aggregator.model.TransactionVO {
 
-    private final long timestamp;
-    private final BigDecimal volume;
-    private final BigDecimal price;
-
+    /**
+     * Class constructor.
+     *
+     * Adapts the data response from the exchange into a known data format.
+     * @param timestamp the transaction timestamp
+     * @param volume the volume for the transaction
+     * @param price the price per btc for the transaction
+     */
     @JsonCreator
     public TransactionVO(
             @JsonProperty("timestamp") long timestamp,
             @JsonProperty("volume") BigDecimal volume,
             @JsonProperty("price") BigDecimal price) {
 
-        this.timestamp = timestamp;
-        this.volume = volume;
-        this.price = price;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public BigDecimal getVolume() {
-        return volume;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
+        super(price, volume, timestamp);
     }
 }

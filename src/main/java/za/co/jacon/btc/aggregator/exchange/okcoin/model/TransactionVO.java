@@ -8,39 +8,15 @@ import java.math.BigDecimal;
 /**
  * Represents a transaction in the OKCoin exchange.
  */
-public class TransactionVO {
-
-    private final BigDecimal amount;
-    private final long timestamp;
-    private final BigDecimal price;
-    private final long tid;
+public class TransactionVO extends za.co.jacon.btc.aggregator.model.TransactionVO {
 
     @JsonCreator
     public TransactionVO(
             @JsonProperty("amount") BigDecimal amount,
             @JsonProperty("date_ms") long timestamp,
-            @JsonProperty("price") BigDecimal price,
-            @JsonProperty("tid") long tid) {
+            @JsonProperty("price") BigDecimal price) {
 
-        this.amount = amount;
-        this.timestamp = timestamp;
-        this.price = price;
-        this.tid = tid;
-    }
+        super(price, amount, timestamp);
 
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public long getTid() {
-        return tid;
     }
 }

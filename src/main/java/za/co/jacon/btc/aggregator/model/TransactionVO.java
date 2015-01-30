@@ -6,24 +6,63 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import java.math.BigDecimal;
 
 /**
- * Object that represents a single transaction returned from any btc exchange api.
+ * Object that represents a single transaction normalized for all supported exchanges.
  */
 public class TransactionVO {
 
     private final BigDecimal price;
+    private final BigDecimal qty;
     private final long timestamp;
-    private final long transactionId;
+    private final long accumulationTimestamp;
+
 
     /**
      * Class constructor allows for value injections.
      * @param price
      * @param timestamp
-     * @param transactionId
      */
-    public TransactionVO(final BigDecimal price, final long timestamp, final long transactionId) {
+    public TransactionVO(
+            final BigDecimal price,
+            final BigDecimal qty,
+            final long timestamp) {
+
         this.price = price;
+        this.qty = qty;
         this.timestamp = timestamp;
-        this.transactionId = transactionId;
+
+        this.accumulationTimestamp = System.currentTimeMillis() / 1000L;
+    }
+
+    /**
+     * Returns the transaction price.
+     * @return the transaction price
+     */
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    /**
+     * Returns the timestamp for the transaction.
+     * @return
+     */
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    /**
+     * Returns the transaction quantity.
+     * @return the transaction qty
+     */
+    public BigDecimal getQty() {
+        return qty;
+    }
+
+    /**
+     * The time at which the data was accumulated.
+     * @return the accumulation time
+     */
+    public long getAccumulationTimestamp() {
+        return accumulationTimestamp;
     }
 
     /**
@@ -35,15 +74,4 @@ public class TransactionVO {
         return ToStringBuilder.reflectionToString(this, RecursiveToStringStyle.SHORT_PREFIX_STYLE);
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public long getTransactionId() {
-        return transactionId;
-    }
 }
