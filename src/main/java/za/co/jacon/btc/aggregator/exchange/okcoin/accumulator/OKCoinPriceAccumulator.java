@@ -5,22 +5,33 @@ import za.co.jacon.btc.aggregator.distributor.Distributor;
 import za.co.jacon.btc.aggregator.exchange.okcoin.api.OKCoinApi;
 import za.co.jacon.btc.aggregator.exchange.okcoin.model.TransactionVO;
 
+import java.util.List;
+
 /**
  * Accumulator responsible for accumulating transaction data from the OKCoin exchange.
  */
 public class OKCoinPriceAccumulator extends PollingAccumulator {
 
+    /**
+     * An instance of the okcoin api.
+     */
     private final OKCoinApi api;
+
+    /**
+     * The exchange reference name.
+     */
+    public static final String EXCHANGE_REFERENCE = "okcoin";
 
     /**
      * Class constructor.
      *
      * Sets the polling delay for the scheduled task and injects the api.
      *
+     * @param distributors list of event distributors.
      * @param pollDelay the polling delay
      */
-    public OKCoinPriceAccumulator(Distributor distributor, OKCoinApi api, int pollDelay) {
-        super(distributor, pollDelay);
+    public OKCoinPriceAccumulator(List<Distributor> distributors, OKCoinApi api, int pollDelay) {
+        super(distributors, pollDelay);
         this.api = api;
     }
 
@@ -31,7 +42,9 @@ public class OKCoinPriceAccumulator extends PollingAccumulator {
     public void run() {
         TransactionVO transaction = api.getLatestTransaction();
         if (transaction != null) {
-            distributor.distribute(transaction, "okcoin");
+            for (Distributor distributor: distributors) {
+                distributor.distribute(transaction, EXCHANGE_REFERENCE);
+            }
         }
     }
 }

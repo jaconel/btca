@@ -9,6 +9,8 @@ import com.pusher.client.connection.ConnectionStateChange;
 import org.apache.log4j.Logger;
 import za.co.jacon.btc.aggregator.distributor.Distributor;
 
+import java.util.List;
+
 /**
  * Accumulator that makes use of the pusher api for receiving ticker data over a websocket.
  *
@@ -28,13 +30,13 @@ public abstract class PusherAccumulator extends AbstractAccumulator implements  
      *
      * Initializes the pusher api etc.
      *
-     * @param distributor the message distributor
+     * @param distributors the message distributor
      * @param pusherApi the configured pusher api
      * @param channel the channel to which to subscribe
      * @param event the event to which to bind
      */
-    public PusherAccumulator(final Distributor distributor, final Pusher pusherApi, final String channel, final String event) {
-        super(distributor);
+    public PusherAccumulator(final List<Distributor> distributors, final Pusher pusherApi, final String channel, final String event) {
+        super(distributors);
 
         this.pusher = pusherApi;
         this.channel = channel;
@@ -47,12 +49,12 @@ public abstract class PusherAccumulator extends AbstractAccumulator implements  
      *
      * Initializes the pusher api etc.
      *
-     * @param distributor the message distributor
+     * @param distributors the message distributors
      * @param pusherApi the configured pusher api
      * @param channel the channel to which to subscribe
      */
-    public PusherAccumulator(final Distributor distributor, final Pusher pusherApi, final String channel) {
-        super(distributor);
+    public PusherAccumulator(final List<Distributor> distributors, final Pusher pusherApi, final String channel) {
+        super(distributors);
 
         this.pusher = pusherApi;
         this.channel = channel;

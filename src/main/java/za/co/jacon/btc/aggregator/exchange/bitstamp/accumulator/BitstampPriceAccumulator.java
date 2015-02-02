@@ -6,25 +6,40 @@ import za.co.jacon.btc.aggregator.accumulator.PollingAccumulator;
 import za.co.jacon.btc.aggregator.exchange.bitstamp.api.BitstampApi;
 import za.co.jacon.btc.aggregator.exchange.bitstamp.model.TransactionVO;
 
+import java.util.List;
+
 /**
  * The bitstamp accumulator responsible for polling the http api.
  */
 public class BitstampPriceAccumulator extends PollingAccumulator {
 
+    /**
+     * Instance of the logger.
+     *
+     * Allows for application level loggin.
+     */
     private final Logger LOGGER = Logger.getLogger(BitstampPriceAccumulator.class);
 
+    /**
+     * Instance of the bitstamp api implementation.
+     */
     protected final BitstampApi api;
+
+    /**
+     * Reference key for this specific exchange.
+     */
+    public static final String EXCHANGE_REFERENCE = "bitstamp";
 
     /**
      * Class constructor.
      *
      * Sets up the accumulator to start accumulating information. The accumulator is not started on construct.
-     * @param distributor the message distributor
+     * @param distributors the message distributors
      * @param api the bitnex api implementation
      * @param pollDelay how often to poll the api for the latest information.
      */
-    public BitstampPriceAccumulator(final Distributor distributor, final BitstampApi api, final int pollDelay) {
-        super(distributor, pollDelay);
+    public BitstampPriceAccumulator(final List<Distributor>  distributors, final BitstampApi api, final int pollDelay) {
+        super(distributors, pollDelay);
         this.api = api;
     }
     /**
@@ -37,7 +52,9 @@ public class BitstampPriceAccumulator extends PollingAccumulator {
     public void run() {
         TransactionVO transaction = api.getLatestTransaction();
         if (transaction != null) {
-            distributor.distribute(transaction, "bitstamp");
+            for (Distributor distributor: distributors) {
+                distributor.distribute(transaction, EXCHANGE_REFERENCE);
+            }
         }
     }
 }

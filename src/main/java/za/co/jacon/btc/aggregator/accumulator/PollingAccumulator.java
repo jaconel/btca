@@ -2,6 +2,7 @@ package za.co.jacon.btc.aggregator.accumulator;
 
 import za.co.jacon.btc.aggregator.distributor.Distributor;
 
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -28,10 +29,11 @@ public abstract class PollingAccumulator extends AbstractAccumulator implements 
      *
      * Sets the polling delay for the scheduled task.
      *
+     * @param distributors the distributors responsible for distributing the data
      * @param pollDelay the polling delay
      */
-    public PollingAccumulator(final Distributor distributor, final int pollDelay) {
-        super(distributor);
+    public PollingAccumulator(final List<Distributor> distributors, final int pollDelay) {
+        super(distributors);
 
         this.pollDelay = pollDelay;
     }

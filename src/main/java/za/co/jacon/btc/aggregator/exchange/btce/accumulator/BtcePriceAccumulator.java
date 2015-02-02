@@ -6,6 +6,8 @@ import za.co.jacon.btc.aggregator.distributor.Distributor;
 import za.co.jacon.btc.aggregator.exchange.btce.api.BtceApi;
 import za.co.jacon.btc.aggregator.exchange.btce.model.TransactionVO;
 
+import java.util.List;
+
 /**
  * The BTC-e accumulator.
  *
@@ -13,22 +15,32 @@ import za.co.jacon.btc.aggregator.exchange.btce.model.TransactionVO;
  */
 public class BtcePriceAccumulator extends PollingAccumulator {
 
+    /**
+     * Instance of the application logger.
+     */
     private static final Logger LOGGER = Logger.getLogger(BtcePriceAccumulator.class);
+
+    /**
+     * The exchange api.
+     */
     private final BtceApi api;
+
+    /**
+     * The exchange reference value.
+     */
+    public static final String EXCHANGE_REFERENCE = "btce";
 
     /**
      * Class constructor.
      *
      * Allows the injection of the BTCe api implementation.
      *
-     * @param distributor the message distributor
+     * @param distributors the message distributor
      * @param api the api implementation
      * @param pollDelay how often to poll the exchange for ticker data.
      */
-    public BtcePriceAccumulator(final Distributor distributor, final BtceApi api, final int pollDelay) {
-        super(distributor, pollDelay);
-
-        LOGGER.debug("Initiating " + BtcePriceAccumulator.class + " with delay of " + pollDelay + " seconds.");
+    public BtcePriceAccumulator(final List<Distributor> distributors, final BtceApi api, final int pollDelay) {
+        super(distributors, pollDelay);
 
         this.api = api;
     }
@@ -40,7 +52,9 @@ public class BtcePriceAccumulator extends PollingAccumulator {
     public void run() {
         TransactionVO transaction = api.getLatestTransaction();
         if (transaction != null) {
-            distributor.distribute(transaction, "btce");
+            for (Distributor distributor: distributors) {
+                distributor.distribute(transaction, EXCHANGE_REFERENCE);
+            }
         }
     }
 }

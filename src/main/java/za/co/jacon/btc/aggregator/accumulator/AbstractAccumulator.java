@@ -2,18 +2,20 @@ package za.co.jacon.btc.aggregator.accumulator;
 
 import za.co.jacon.btc.aggregator.distributor.Distributor;
 
+import java.util.List;
+
 /**
  * The abstract accumulator.
  */
 public abstract class AbstractAccumulator implements Accumulator {
 
-    protected final Distributor distributor;
+    protected final List<Distributor> distributors;
 
     /**
      * Class constructor.
-     * @param distributor the message distributor.
+     * @param distributors the message distributors.
      */
-    public AbstractAccumulator(Distributor distributor) {
-        this.distributor = distributor;
+    public AbstractAccumulator(List<Distributor>  distributors) {
+        this.distributors = distributors;
     }
 }

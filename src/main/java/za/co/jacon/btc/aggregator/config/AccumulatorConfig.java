@@ -19,6 +19,8 @@ import za.co.jacon.btc.aggregator.exchange.cryptsy.accumulator.CryptsyPriceAccum
 import za.co.jacon.btc.aggregator.exchange.okcoin.accumulator.OKCoinPriceAccumulator;
 import za.co.jacon.btc.aggregator.exchange.okcoin.api.OKCoinApi;
 
+import java.util.List;
+
 /**
  * Set's up the Accumulator in the spring dependancy injection container.
  */
@@ -30,14 +32,14 @@ public class AccumulatorConfig {
      *
      * @param environment the spring environment
      * @param bitstampApi the configure bitstamp api
-     * @param distributor the configured distributor
+     * @param distributors the configured distributors
      *
      * @return the configured bitstamp accumulator.
      */
     @Bean
-    public Accumulator bitstampPriceAccumulator(final Environment environment, final BitstampApi bitstampApi, final Distributor distributor) {
+    public Accumulator bitstampPriceAccumulator(final Environment environment, final BitstampApi bitstampApi, final List<Distributor> distributors) {
         final int pollDelay = environment.getRequiredProperty("exchange.bitstamp.accumulator.poll_delay_in_seconds", Integer.class);
-        return new BitstampPriceAccumulator(distributor, bitstampApi, pollDelay);
+        return new BitstampPriceAccumulator(distributors, bitstampApi, pollDelay);
     }
 
     /**
@@ -45,14 +47,14 @@ public class AccumulatorConfig {
      *
      * @param environment the spring environment
      * @param bitfinexApi the configure bitstamp api
-     * @param distributor the configured distributor
+     * @param distributors the configured distributors
      *
      * @return the configured bitstamp accumulator.
      */
     @Bean
-    public Accumulator bitfinexPriceAccumulator(final Environment environment, final BitfinexApi bitfinexApi, final Distributor distributor) {
+    public Accumulator bitfinexPriceAccumulator(final Environment environment, final BitfinexApi bitfinexApi, final List<Distributor> distributors) {
         final int pollDelay = environment.getRequiredProperty("exchange.bitfinex.accumulator.poll_delay_in_seconds", Integer.class);
-        return new BitfinexPriceAccumulator(distributor, bitfinexApi, pollDelay);
+        return new BitfinexPriceAccumulator(distributors, bitfinexApi, pollDelay);
     }
 
     /**
@@ -60,14 +62,14 @@ public class AccumulatorConfig {
      *
      * @param environment the spring environment
      * @param api the configure btce api
-     * @param distributor the configured distributor
+     * @param distributors the configured distributors
      *
      * @return the configured btce accumulator.
      */
     @Bean
-    public Accumulator btcePriceAccumulator(final Environment environment, final BtceApi api, final Distributor distributor) {
+    public Accumulator btcePriceAccumulator(final Environment environment, final BtceApi api, final List<Distributor> distributors) {
         final int pollDelay = environment.getRequiredProperty("exchange.btce.accumulator.poll_delay_in_seconds", Integer.class);
-        return new BtcePriceAccumulator(distributor, api, pollDelay);
+        return new BtcePriceAccumulator(distributors, api, pollDelay);
     }
 
     /**
@@ -75,14 +77,14 @@ public class AccumulatorConfig {
      *
      * @param environment the spring environment
      * @param api the configure bitx api
-     * @param distributor the configured distributor
+     * @param distributors the configured distributors
      *
      * @return the configured bitx accumulator.
      */
     @Bean
-    public Accumulator bitXPriceAccumulator(final Environment environment, final BitXApi api, final Distributor distributor) {
+    public Accumulator bitXPriceAccumulator(final Environment environment, final BitXApi api, final List<Distributor> distributors) {
         final int pollDelay = environment.getRequiredProperty("exchange.bitx.accumulator.poll_delay_in_seconds", Integer.class);
-        return new BitXPriceAccumulator(distributor, api, pollDelay);
+        return new BitXPriceAccumulator(distributors, api, pollDelay);
     }
 
     /**
@@ -90,14 +92,14 @@ public class AccumulatorConfig {
      *
      * @param environment the spring environment
      * @param api the configure okcoin api
-     * @param distributor the configured distributor
+     * @param distributors the configured distributors
      *
      * @return the configured okcoin accumulator.
      */
     @Bean
-    public Accumulator okcoinPriceAccumulator(final Environment environment, final OKCoinApi api, final Distributor distributor) {
+    public Accumulator okcoinPriceAccumulator(final Environment environment, final OKCoinApi api, final List<Distributor> distributors) {
         final int pollDelay = environment.getRequiredProperty("exchange.okcoin.accumulator.poll_delay_in_seconds", Integer.class);
-        return new OKCoinPriceAccumulator(distributor, api, pollDelay);
+        return new OKCoinPriceAccumulator(distributors, api, pollDelay);
     }
 
 
@@ -106,16 +108,16 @@ public class AccumulatorConfig {
      *
      * @param environment the spring environment
      * @param mapper the configured object mapper
-     * @param distributor the configured distributor
+     * @param distributors the configured distributors
      *
      * @return the configure cryptsy accumulator
      */
     @Bean
-    public Accumulator cryptsyPriceAccumulator(final Environment environment, final ObjectMapper mapper, final Distributor distributor) {
+    public Accumulator cryptsyPriceAccumulator(final Environment environment, final ObjectMapper mapper, final List<Distributor> distributors) {
         final String pusherKey = environment.getRequiredProperty("exchange.crypsty.accumulator.pusher_key", String.class);
         final String pusherChannel = environment.getRequiredProperty("exchange.crypsty.accumulator.pusher_channel", String.class);
         final String pusherEvent = environment.getRequiredProperty("exchange.crypsty.accumulator.pusher_event", String.class);
 
-        return new CryptsyPriceAccumulator(distributor, new Pusher(pusherKey), pusherChannel, pusherEvent, mapper);
+        return new CryptsyPriceAccumulator(distributors, new Pusher(pusherKey), pusherChannel, pusherEvent, mapper);
     }
 }

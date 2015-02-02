@@ -6,6 +6,8 @@ import za.co.jacon.btc.aggregator.distributor.Distributor;
 import za.co.jacon.btc.aggregator.exchange.bitfinex.api.BitfinexApi;
 import za.co.jacon.btc.aggregator.exchange.bitfinex.model.TransactionVO;
 
+import java.util.List;
+
 /**
  * The Bitfinex accumulator.
  *
@@ -21,12 +23,12 @@ public class BitfinexPriceAccumulator extends PollingAccumulator {
      * Class constructor.
      *
      * Sets up the accumulator to start accumulating information. The accumulator is not started on construct.
-     * @param distributor the message distributor
+     * @param distributors the message distributors
      * @param api the bitnex api implementation
      * @param pollDelay how often to poll the api for the latest information.
      */
-    public BitfinexPriceAccumulator(final Distributor distributor, final BitfinexApi api, final int pollDelay) {
-        super(distributor, pollDelay);
+    public BitfinexPriceAccumulator(final List<Distributor> distributors, final BitfinexApi api, final int pollDelay) {
+        super(distributors, pollDelay);
 
         LOGGER.debug("Initiating " + BitfinexPriceAccumulator.class + " with delay " + pollDelay);
 
@@ -43,7 +45,9 @@ public class BitfinexPriceAccumulator extends PollingAccumulator {
     public void run() {
         TransactionVO transaction = api.getLatestTransaction();
         if (transaction != null) {
-            this.distributor.distribute(transaction, "bitfinex");
+            for (Distributor distributor: distributors) {
+                distributor.distribute(transaction, "bitfinex");
+            }
         }
     }
 }
