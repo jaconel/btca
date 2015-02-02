@@ -11,6 +11,15 @@
     <properties>
         <spring.amqp.version>1.4.0.RELEASE</spring.amqp.version>
         <spring.framework.version>4.1.2.RELEASE</spring.framework.version>
+        <junit.version>3.8.1</junit.version>
+        <log4j.version>1.2.17</log4j.version>
+        <slf4j.version>1.7.7</slf4j.version>
+        <pusher.client.version>0.3.1</pusher.client.version>
+        <jackson.databind.version>2.3.3</jackson.databind.version>
+        <jackson.annotations.version>2.3.0</jackson.annotations.version>
+        <jackson.core.version>2.3.3</jackson.core.version>
+        <apache.commons.lang3.version>3.3.1</apache.commons.lang3.version>
+        <statsd.client.version>3.0.1</statsd.client.version>
     </properties>
 
 
@@ -18,32 +27,32 @@
         <dependency>
           <groupId>junit</groupId>
           <artifactId>junit</artifactId>
-          <version>3.8.1</version>
+          <version>${junit.version}</version>
           <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>4.1.2.RELEASE</version>
+            <version>${spring.framework.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>4.1.2.RELEASE</version>
+            <version>${spring.framework.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
-            <version>4.1.2.RELEASE</version>
+            <version>${spring.framework.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>4.1.2.RELEASE</version>
+            <version>${spring.framework.version}</version>
         </dependency>
 
         <dependency>
@@ -103,45 +112,50 @@
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
+            <version>${log4j.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.7</version>
+            <version>${slf4j.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.pusher</groupId>
             <artifactId>pusher-java-client</artifactId>
-            <version>0.3.1</version>
+            <version>${pusher.client.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.3.3</version>
+            <version>${jackson.databind.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>2.3.0</version>
+            <version>${jackson.annotations.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.3.3</version>
+            <version>${jackson.core.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.3.1</version>
+            <version>${apache.commons.lang3.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.timgroup</groupId>
+            <artifactId>java-statsd-client</artifactId>
+            <version>${statsd.client.version}</version>
+        </dependency>
 
     </dependencies>
 
