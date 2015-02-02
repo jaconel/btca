@@ -31,7 +31,7 @@ import java.util.List;
  * Context configuration for setting up spring dependency injection.
  */
 @Configuration
-@Import({AMQPConfig.class, ExchangeApiConfig.class, AccumulatorConfig.class})
+@Import({AMQPConfig.class, ExchangeApiConfig.class, AccumulatorConfig.class, DistributorConfig.class})
 public class ContextConfig {
 
     @Bean
@@ -57,10 +57,6 @@ public class ContextConfig {
         return new ResponseErrorHandler();
     }
 
-    @Bean
-    public Distributor getAMQPDistributor(final AmqpTemplate amqpTemplate) {
-        return new AMQPDistributor(amqpTemplate);
-    }
 
     @Bean
     public AccumulatorCoordinator getCoordinator(final List<Accumulator> accumulators, final Distributor distributor) {
