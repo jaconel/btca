@@ -28,7 +28,7 @@ public class AMQPDistributor implements Distributor {
      *
      * The exchange name will be used as routing key.
      *
-     * @param dataObject
+     * @param dataObject the object to store in the queue
      */
     public void distribute(Object dataObject, String exchange) {
         this.amqp.convertAndSend(exchange, dataObject);
