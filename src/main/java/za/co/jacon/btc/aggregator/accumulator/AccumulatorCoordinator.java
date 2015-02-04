@@ -12,17 +12,15 @@ import java.util.List;
 public class AccumulatorCoordinator implements InitializingBean, DisposableBean {
 
     private final List<Accumulator> accumulators;
-    private final Distributor distributor;
 
-    public AccumulatorCoordinator(List<Accumulator> accumulators, Distributor distributor) {
+    public AccumulatorCoordinator(List<Accumulator> accumulators) {
         this.accumulators = accumulators;
-        this.distributor = distributor;
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
         for (Accumulator accumulator: this.accumulators) {
-            accumulator.start(this.distributor);
+            accumulator.start();
         }
     }
 

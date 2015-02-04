@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import za.co.jacon.btc.aggregator.accumulator.PollingAccumulator;
 import za.co.jacon.btc.aggregator.distributor.Distributor;
 import za.co.jacon.btc.aggregator.exchange.bitfinex.api.BitfinexApi;
-import za.co.jacon.btc.aggregator.exchange.bitfinex.model.TransactionVO;
+import za.co.jacon.btc.aggregator.model.TransactionVO;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  *
  * Accumulates information from the Bitfinex exchange and publishes it to the distributors registered in the system.
  */
-public class BitfinexPriceAccumulator extends PollingAccumulator {
+public class BitfinexPriceAccumulator extends PollingAccumulator<TransactionVO> {
 
     private final Logger LOGGER = Logger.getLogger(BitfinexPriceAccumulator.class);
 
@@ -27,7 +27,7 @@ public class BitfinexPriceAccumulator extends PollingAccumulator {
      * @param api the bitnex api implementation
      * @param pollDelay how often to poll the api for the latest information.
      */
-    public BitfinexPriceAccumulator(final List<Distributor> distributors, final BitfinexApi api, final int pollDelay) {
+    public BitfinexPriceAccumulator(final List<Distributor<TransactionVO>> distributors, final BitfinexApi api, final int pollDelay) {
         super(distributors, pollDelay);
 
         LOGGER.debug("Initiating " + BitfinexPriceAccumulator.class + " with delay " + pollDelay);

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -19,7 +18,6 @@ import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
 import za.co.jacon.btc.aggregator.accumulator.Accumulator;
 import za.co.jacon.btc.aggregator.accumulator.AccumulatorCoordinator;
-import za.co.jacon.btc.aggregator.distributor.AMQPDistributor;
 import za.co.jacon.btc.aggregator.distributor.Distributor;
 import za.co.jacon.btc.aggregator.rest.ResponseErrorHandler;
 
@@ -59,8 +57,8 @@ public class ContextConfig {
 
 
     @Bean
-    public AccumulatorCoordinator getCoordinator(final List<Accumulator> accumulators, final Distributor distributor) {
-        return new AccumulatorCoordinator(accumulators, distributor);
+    public AccumulatorCoordinator getCoordinator(final List<Accumulator> accumulators) {
+        return new AccumulatorCoordinator(accumulators);
     }
 
     @Bean

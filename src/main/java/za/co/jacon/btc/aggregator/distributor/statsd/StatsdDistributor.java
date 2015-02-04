@@ -1,18 +1,19 @@
-package za.co.jacon.btc.aggregator.distributor;
+package za.co.jacon.btc.aggregator.distributor.statsd;
 
 import com.timgroup.statsd.StatsDClient;
+import za.co.jacon.btc.aggregator.distributor.Distributor;
 
 /**
  * Statsd distributor.
  *
  * Distributes information to a statsd endpoint.
  */
-public class StatsdDistributor implements Distributor {
+public abstract class StatsdDistributor<T> implements Distributor<T> {
 
     /**
      * The statsD client used for communication with the statsd server.
      */
-    private final StatsDClient statsDClient;
+    protected final StatsDClient statsDClient;
 
     /**
      * Class constructor.
@@ -21,10 +22,5 @@ public class StatsdDistributor implements Distributor {
      */
     public StatsdDistributor(final StatsDClient statsDClient) {
         this.statsDClient = statsDClient;
-    }
-
-    @Override
-    public void distribute(Object dataObject, String exchange) {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 }

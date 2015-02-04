@@ -18,6 +18,7 @@ import za.co.jacon.btc.aggregator.exchange.btce.api.BtceApi;
 import za.co.jacon.btc.aggregator.exchange.cryptsy.accumulator.CryptsyPriceAccumulator;
 import za.co.jacon.btc.aggregator.exchange.okcoin.accumulator.OKCoinPriceAccumulator;
 import za.co.jacon.btc.aggregator.exchange.okcoin.api.OKCoinApi;
+import za.co.jacon.btc.aggregator.model.TransactionVO;
 
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class AccumulatorConfig {
      * @return the configured bitstamp accumulator.
      */
     @Bean
-    public Accumulator bitstampPriceAccumulator(final Environment environment, final BitstampApi bitstampApi, final List<Distributor> distributors) {
+    public Accumulator bitstampPriceAccumulator(final Environment environment, final BitstampApi bitstampApi, final List<Distributor<TransactionVO>> distributors) {
         final int pollDelay = environment.getRequiredProperty("exchange.bitstamp.accumulator.poll_delay_in_seconds", Integer.class);
         return new BitstampPriceAccumulator(distributors, bitstampApi, pollDelay);
     }
@@ -52,7 +53,7 @@ public class AccumulatorConfig {
      * @return the configured bitstamp accumulator.
      */
     @Bean
-    public Accumulator bitfinexPriceAccumulator(final Environment environment, final BitfinexApi bitfinexApi, final List<Distributor> distributors) {
+    public Accumulator bitfinexPriceAccumulator(final Environment environment, final BitfinexApi bitfinexApi, final List<Distributor<TransactionVO>> distributors) {
         final int pollDelay = environment.getRequiredProperty("exchange.bitfinex.accumulator.poll_delay_in_seconds", Integer.class);
         return new BitfinexPriceAccumulator(distributors, bitfinexApi, pollDelay);
     }
@@ -67,7 +68,7 @@ public class AccumulatorConfig {
      * @return the configured btce accumulator.
      */
     @Bean
-    public Accumulator btcePriceAccumulator(final Environment environment, final BtceApi api, final List<Distributor> distributors) {
+    public Accumulator btcePriceAccumulator(final Environment environment, final BtceApi api, final List<Distributor<TransactionVO>> distributors) {
         final int pollDelay = environment.getRequiredProperty("exchange.btce.accumulator.poll_delay_in_seconds", Integer.class);
         return new BtcePriceAccumulator(distributors, api, pollDelay);
     }
@@ -82,7 +83,7 @@ public class AccumulatorConfig {
      * @return the configured bitx accumulator.
      */
     @Bean
-    public Accumulator bitXPriceAccumulator(final Environment environment, final BitXApi api, final List<Distributor> distributors) {
+    public Accumulator bitXPriceAccumulator(final Environment environment, final BitXApi api, final List<Distributor<TransactionVO>> distributors) {
         final int pollDelay = environment.getRequiredProperty("exchange.bitx.accumulator.poll_delay_in_seconds", Integer.class);
         return new BitXPriceAccumulator(distributors, api, pollDelay);
     }
@@ -97,7 +98,7 @@ public class AccumulatorConfig {
      * @return the configured okcoin accumulator.
      */
     @Bean
-    public Accumulator okcoinPriceAccumulator(final Environment environment, final OKCoinApi api, final List<Distributor> distributors) {
+    public Accumulator okcoinPriceAccumulator(final Environment environment, final OKCoinApi api, final List<Distributor<TransactionVO>> distributors) {
         final int pollDelay = environment.getRequiredProperty("exchange.okcoin.accumulator.poll_delay_in_seconds", Integer.class);
         return new OKCoinPriceAccumulator(distributors, api, pollDelay);
     }
@@ -113,7 +114,7 @@ public class AccumulatorConfig {
      * @return the configure cryptsy accumulator
      */
     @Bean
-    public Accumulator cryptsyPriceAccumulator(final Environment environment, final ObjectMapper mapper, final List<Distributor> distributors) {
+    public Accumulator cryptsyPriceAccumulator(final Environment environment, final ObjectMapper mapper, final List<Distributor<TransactionVO>> distributors) {
         final String pusherKey = environment.getRequiredProperty("exchange.crypsty.accumulator.pusher_key", String.class);
         final String pusherChannel = environment.getRequiredProperty("exchange.crypsty.accumulator.pusher_channel", String.class);
         final String pusherEvent = environment.getRequiredProperty("exchange.crypsty.accumulator.pusher_event", String.class);

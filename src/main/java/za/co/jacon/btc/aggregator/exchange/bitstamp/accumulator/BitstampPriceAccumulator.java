@@ -4,14 +4,15 @@ import org.apache.log4j.Logger;
 import za.co.jacon.btc.aggregator.distributor.Distributor;
 import za.co.jacon.btc.aggregator.accumulator.PollingAccumulator;
 import za.co.jacon.btc.aggregator.exchange.bitstamp.api.BitstampApi;
-import za.co.jacon.btc.aggregator.exchange.bitstamp.model.TransactionVO;
+import za.co.jacon.btc.aggregator.model.TransactionVO;
+
 
 import java.util.List;
 
 /**
  * The bitstamp accumulator responsible for polling the http api.
  */
-public class BitstampPriceAccumulator extends PollingAccumulator {
+public class BitstampPriceAccumulator extends PollingAccumulator<TransactionVO> {
 
     /**
      * Instance of the logger.
@@ -38,7 +39,7 @@ public class BitstampPriceAccumulator extends PollingAccumulator {
      * @param api the bitnex api implementation
      * @param pollDelay how often to poll the api for the latest information.
      */
-    public BitstampPriceAccumulator(final List<Distributor>  distributors, final BitstampApi api, final int pollDelay) {
+    public BitstampPriceAccumulator(final List<Distributor<TransactionVO>>  distributors, final BitstampApi api, final int pollDelay) {
         super(distributors, pollDelay);
         this.api = api;
     }

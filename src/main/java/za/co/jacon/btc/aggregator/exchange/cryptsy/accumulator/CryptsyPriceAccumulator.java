@@ -6,7 +6,7 @@ import com.pusher.client.Pusher;
 import org.apache.log4j.Logger;
 import za.co.jacon.btc.aggregator.accumulator.PusherAccumulator;
 import za.co.jacon.btc.aggregator.distributor.Distributor;
-import za.co.jacon.btc.aggregator.exchange.cryptsy.model.TransactionVO;
+import za.co.jacon.btc.aggregator.model.TransactionVO;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
  *
  * Responsible for accumulating cryptsy exchange data and distributing it to the various distributors.
  */
-public class CryptsyPriceAccumulator extends PusherAccumulator {
+public class CryptsyPriceAccumulator extends PusherAccumulator<TransactionVO> {
 
     /**
      * An instance of the application logger.
@@ -42,7 +42,9 @@ public class CryptsyPriceAccumulator extends PusherAccumulator {
      * @param event the push event to bind to
      * @param mapper the object mapper for message serialization
      */
-    public CryptsyPriceAccumulator(final List<Distributor> distributors, final Pusher pusherApi, final String channel, final String event, final ObjectMapper mapper) {
+    public CryptsyPriceAccumulator(
+        final List<Distributor<TransactionVO>> distributors, final Pusher pusherApi, final String channel, final String event, final ObjectMapper mapper) {
+
         super(distributors, pusherApi, channel, event);
 
         this.mapper = mapper;
@@ -54,7 +56,7 @@ public class CryptsyPriceAccumulator extends PusherAccumulator {
             JsonNode rootNode = mapper.readValue(data, JsonNode.class);
             JsonNode jsonNode = rootNode.get("trade");
 
-            TransactionVO transaction = mapper.readValue(jsonNode.toString(), TransactionVO.class);
+            za.co.jacon.btc.aggregator.exchange.cryptsy.model.TransactionVO transaction = mapper.readValue(jsonNode.toString(), za.co.jacon.btc.aggregator.exchange.cryptsy.model.TransactionVO.class);
 
             for (Distributor distributor: distributors) {
                 distributor.distribute(transaction, EXCHANGE_REFERENCE);

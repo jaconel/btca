@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * The polling accumulator class.
  */
-public abstract class PollingAccumulator extends AbstractAccumulator implements Runnable {
+public abstract class PollingAccumulator<T> extends AbstractAccumulator<T> implements Runnable {
 
     protected final int pollDelay;
 
@@ -32,7 +32,7 @@ public abstract class PollingAccumulator extends AbstractAccumulator implements 
      * @param distributors the distributors responsible for distributing the data
      * @param pollDelay the polling delay
      */
-    public PollingAccumulator(final List<Distributor> distributors, final int pollDelay) {
+    public PollingAccumulator(final List<Distributor<T>> distributors, final int pollDelay) {
         super(distributors);
 
         this.pollDelay = pollDelay;
@@ -40,10 +40,9 @@ public abstract class PollingAccumulator extends AbstractAccumulator implements 
 
     /**
      * Starts the accumulation process by initiate a scheduled task.
-     * @param distributor the distributor which is responsible for distributing the accumulated data.
      */
     @Override
-    public void start(Distributor distributor) {
+    public void start() {
         this.schedule = scheduler.scheduleAtFixedRate(this, INITIAL_SCHEDULE_DELAY_IN_SECONDS, this.pollDelay, TimeUnit.SECONDS);
     }
 

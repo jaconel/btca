@@ -4,14 +4,14 @@ import org.apache.log4j.Logger;
 import za.co.jacon.btc.aggregator.accumulator.PollingAccumulator;
 import za.co.jacon.btc.aggregator.distributor.Distributor;
 import za.co.jacon.btc.aggregator.exchange.bitx.api.BitXApi;
-import za.co.jacon.btc.aggregator.exchange.bitx.model.TransactionVO;
+import za.co.jacon.btc.aggregator.model.TransactionVO;
 
 import java.util.List;
 
 /**
  * Accumulator for the BTX exchange.
  */
-public class BitXPriceAccumulator extends PollingAccumulator {
+public class BitXPriceAccumulator extends PollingAccumulator<TransactionVO> {
 
     /**
      * Logger instance. Makes use of log4j logger factory to instantiate an instance specific for this class.
@@ -37,7 +37,7 @@ public class BitXPriceAccumulator extends PollingAccumulator {
      * @param api the bitx api implementation.
      * @param pollDelay how often should we poll the exchange for data
      */
-    public BitXPriceAccumulator(final List<Distributor> distributors, final BitXApi api, final int pollDelay) {
+    public BitXPriceAccumulator(final List<Distributor<TransactionVO>> distributors, final BitXApi api, final int pollDelay) {
         super(distributors, pollDelay);
         this.api = api;
     }

@@ -16,7 +16,7 @@ import java.util.List;
  *
  * All objects extending the PusherAccumulator is expected to implement the onEvent().
  */
-public abstract class PusherAccumulator extends AbstractAccumulator implements  ConnectionEventListener, SubscriptionEventListener {
+public abstract class PusherAccumulator<T> extends AbstractAccumulator<T> implements  ConnectionEventListener, SubscriptionEventListener {
 
     protected final Pusher pusher;
     protected final String channel;
@@ -35,7 +35,7 @@ public abstract class PusherAccumulator extends AbstractAccumulator implements  
      * @param channel the channel to which to subscribe
      * @param event the event to which to bind
      */
-    public PusherAccumulator(final List<Distributor> distributors, final Pusher pusherApi, final String channel, final String event) {
+    public PusherAccumulator(final List<Distributor<T>> distributors, final Pusher pusherApi, final String channel, final String event) {
         super(distributors);
 
         this.pusher = pusherApi;
@@ -45,29 +45,11 @@ public abstract class PusherAccumulator extends AbstractAccumulator implements  
     }
 
     /**
-     * Class constructor.
-     *
-     * Initializes the pusher api etc.
-     *
-     * @param distributors the message distributors
-     * @param pusherApi the configured pusher api
-     * @param channel the channel to which to subscribe
-     */
-    public PusherAccumulator(final List<Distributor> distributors, final Pusher pusherApi, final String channel) {
-        super(distributors);
-
-        this.pusher = pusherApi;
-        this.channel = channel;
-        this.event = null;
-    }
-
-    /**
      * Starts the accumulator by connecting to the pusher api, subscribing to the given channel and possibly binding
      * to a specific event.
-     * @param distributor the distributor responsible for distributing the accumulated data.
      */
     @Override
-    public void start(Distributor distributor) {
+    public void start() {
         this.pusher.connect(this, ConnectionState.ALL);
         Channel channel = this.pusher.subscribe(this.channel);
         if (this.event != null) {

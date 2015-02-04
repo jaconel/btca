@@ -3,6 +3,7 @@ package za.co.jacon.btc.aggregator.exchange.bitfinex.api;
 import za.co.jacon.btc.aggregator.exchange.bitfinex.model.TickerVO;
 import za.co.jacon.btc.aggregator.exchange.bitfinex.model.TransactionVO;
 
+
 import java.util.List;
 
 /**

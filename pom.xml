@@ -19,7 +19,7 @@
         <jackson.annotations.version>2.3.0</jackson.annotations.version>
         <jackson.core.version>2.3.3</jackson.core.version>
         <apache.commons.lang3.version>3.3.1</apache.commons.lang3.version>
-        <statsd.client.version>3.0.1</statsd.client.version>
+        <statsd.client.version>3.0.2</statsd.client.version>
     </properties>
 
 
@@ -156,6 +156,12 @@
             <groupId>com.timgroup</groupId>
             <artifactId>java-statsd-client</artifactId>
             <version>${statsd.client.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>2.13.0</version>
         </dependency>
 
     </dependencies>

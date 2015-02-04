@@ -3,14 +3,14 @@ package za.co.jacon.btc.aggregator.exchange.okcoin.accumulator;
 import za.co.jacon.btc.aggregator.accumulator.PollingAccumulator;
 import za.co.jacon.btc.aggregator.distributor.Distributor;
 import za.co.jacon.btc.aggregator.exchange.okcoin.api.OKCoinApi;
-import za.co.jacon.btc.aggregator.exchange.okcoin.model.TransactionVO;
+import za.co.jacon.btc.aggregator.model.TransactionVO;
 
 import java.util.List;
 
 /**
  * Accumulator responsible for accumulating transaction data from the OKCoin exchange.
  */
-public class OKCoinPriceAccumulator extends PollingAccumulator {
+public class OKCoinPriceAccumulator extends PollingAccumulator<TransactionVO> {
 
     /**
      * An instance of the okcoin api.
@@ -30,7 +30,7 @@ public class OKCoinPriceAccumulator extends PollingAccumulator {
      * @param distributors list of event distributors.
      * @param pollDelay the polling delay
      */
-    public OKCoinPriceAccumulator(List<Distributor> distributors, OKCoinApi api, int pollDelay) {
+    public OKCoinPriceAccumulator(List<Distributor<TransactionVO>> distributors, OKCoinApi api, int pollDelay) {
         super(distributors, pollDelay);
         this.api = api;
     }
