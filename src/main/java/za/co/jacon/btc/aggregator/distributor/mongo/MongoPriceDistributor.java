@@ -38,8 +38,6 @@ public class MongoPriceDistributor extends MongoDistributor {
         doc.append("timestamp", transaction.getTimestamp());
         doc.append("price", transaction.getPrice().doubleValue());
 
-        WriteResult result = collection.insert(doc);
-
-        System.out.print("rara");
+        collection.insert(doc);
     }
 }
