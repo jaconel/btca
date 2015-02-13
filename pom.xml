@@ -187,19 +187,24 @@
                 <configuration>
                     <archive>
                         <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
                             <mainClass>za.co.jacon.btc.aggregator.App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
             </plugin>
 
-            <!-- Build an all inclusive JAR -->
-            <!--
+
+            <!-- Configure maven's dependency plugin to copy all dependencies to {build dir}/lib -->
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.1</version>
                 <executions>
                     <execution>
-                        <phase>install</phase>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
                         <goals>
                             <goal>copy-dependencies</goal>
                         </goals>
@@ -208,9 +213,10 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin> -->
+            </plugin>
 
             <!-- Build an all inclusive JAR -->
+            <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -224,6 +230,8 @@
                     </execution>
                 </executions>
             </plugin>
+            -->
+
         </plugins>
     </build>
 
