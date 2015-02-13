@@ -1,13 +1,8 @@
 package za.co.jacon.btc.aggregator;
 
-import com.pusher.client.Pusher;
-import com.pusher.client.channel.Channel;
-import com.pusher.client.channel.ChannelEventListener;
-import com.pusher.client.channel.SubscriptionEventListener;
-import com.pusher.client.connection.ConnectionEventListener;
-import com.pusher.client.connection.ConnectionState;
-import com.pusher.client.connection.ConnectionStateChange;
-import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.PropertiesPropertySource;
@@ -27,7 +22,8 @@ import java.util.Properties;
 public class App 
 {
 
-    public static final Logger LOGGER = Logger.getLogger(App.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(App.class);
+
 
     public static void main( String[] args )
     {
@@ -47,12 +43,12 @@ public class App
     }
 
     private void setupLogger() {
-        try {
-            Log4jConfigurer.initLogging("classpath:Logging.properties", 5000L);
-        } catch (FileNotFoundException e) {
-            System.out.println("Unable to initialize the logger due to missing Logging.properties file. System will halt.");
-            System.exit(1);
+        InputStream loggingProperties = App.class.getClassLoader().getResourceAsStream("Logging.properties");
+        if (loggingProperties == null) {
+            System.out.println("Unable to locate the Logging.properties file on the classpath. System halting.");
+            System.exit(0);
         }
+        PropertyConfigurator.configure(loggingProperties);
         LOGGER.info("Application logging configured.");
     }
 
