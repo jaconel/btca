@@ -39,7 +39,7 @@ public class AccumulatorConfig {
      */
     @Bean
     public Accumulator bitstampPriceAccumulator(final Environment environment, final BitstampApi bitstampApi, final List<Distributor<TransactionVO>> distributors) {
-        final int pollDelay = environment.getRequiredProperty("exchange.bitstamp.accumulator.poll_delay_in_seconds", Integer.class);
+        final int pollDelay = environment.getRequiredProperty("btca.exchange.bitstamp.accumulator.poll_delay_in_seconds", Integer.class);
         return new BitstampPriceAccumulator(distributors, bitstampApi, pollDelay);
     }
 
@@ -54,7 +54,7 @@ public class AccumulatorConfig {
      */
     @Bean
     public Accumulator bitfinexPriceAccumulator(final Environment environment, final BitfinexApi bitfinexApi, final List<Distributor<TransactionVO>> distributors) {
-        final int pollDelay = environment.getRequiredProperty("exchange.bitfinex.accumulator.poll_delay_in_seconds", Integer.class);
+        final int pollDelay = environment.getRequiredProperty("btca.exchange.bitfinex.accumulator.poll_delay_in_seconds", Integer.class);
         return new BitfinexPriceAccumulator(distributors, bitfinexApi, pollDelay);
     }
 
@@ -69,7 +69,7 @@ public class AccumulatorConfig {
      */
     @Bean
     public Accumulator btcePriceAccumulator(final Environment environment, final BtceApi api, final List<Distributor<TransactionVO>> distributors) {
-        final int pollDelay = environment.getRequiredProperty("exchange.btce.accumulator.poll_delay_in_seconds", Integer.class);
+        final int pollDelay = environment.getRequiredProperty("btca.exchange.btce.accumulator.poll_delay_in_seconds", Integer.class);
         return new BtcePriceAccumulator(distributors, api, pollDelay);
     }
 
@@ -84,7 +84,7 @@ public class AccumulatorConfig {
      */
     @Bean
     public Accumulator bitXPriceAccumulator(final Environment environment, final BitXApi api, final List<Distributor<TransactionVO>> distributors) {
-        final int pollDelay = environment.getRequiredProperty("exchange.bitx.accumulator.poll_delay_in_seconds", Integer.class);
+        final int pollDelay = environment.getRequiredProperty("btca.exchange.bitx.accumulator.poll_delay_in_seconds", Integer.class);
         return new BitXPriceAccumulator(distributors, api, pollDelay);
     }
 
@@ -99,7 +99,7 @@ public class AccumulatorConfig {
      */
     @Bean
     public Accumulator okcoinPriceAccumulator(final Environment environment, final OKCoinApi api, final List<Distributor<TransactionVO>> distributors) {
-        final int pollDelay = environment.getRequiredProperty("exchange.okcoin.accumulator.poll_delay_in_seconds", Integer.class);
+        final int pollDelay = environment.getRequiredProperty("btca.exchange.okcoin.accumulator.poll_delay_in_seconds", Integer.class);
         return new OKCoinPriceAccumulator(distributors, api, pollDelay);
     }
 
@@ -115,9 +115,9 @@ public class AccumulatorConfig {
      */
     @Bean
     public Accumulator cryptsyPriceAccumulator(final Environment environment, final ObjectMapper mapper, final List<Distributor<TransactionVO>> distributors) {
-        final String pusherKey = environment.getRequiredProperty("exchange.crypsty.accumulator.pusher_key", String.class);
-        final String pusherChannel = environment.getRequiredProperty("exchange.crypsty.accumulator.pusher_channel", String.class);
-        final String pusherEvent = environment.getRequiredProperty("exchange.crypsty.accumulator.pusher_event", String.class);
+        final String pusherKey = environment.getRequiredProperty("btca.exchange.crypsty.accumulator.pusher_key", String.class);
+        final String pusherChannel = environment.getRequiredProperty("btca.exchange.crypsty.accumulator.pusher_channel", String.class);
+        final String pusherEvent = environment.getRequiredProperty("btca.exchange.crypsty.accumulator.pusher_event", String.class);
 
         return new CryptsyPriceAccumulator(distributors, new Pusher(pusherKey), pusherChannel, pusherEvent, mapper);
     }

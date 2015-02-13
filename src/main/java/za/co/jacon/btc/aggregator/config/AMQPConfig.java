@@ -33,10 +33,10 @@ public class AMQPConfig {
      */
     @Bean
     public ConnectionFactory connectionFactory(Environment environment) {
-        String host = environment.getRequiredProperty("amqp.host");
-        String user = environment.getRequiredProperty("amqp.user");
-        String pass = environment.getRequiredProperty("amqp.password");
-        String vhost = environment.getRequiredProperty("amqp.transactions.vhost");
+        String host = environment.getRequiredProperty("btca.amqp.host");
+        String user = environment.getRequiredProperty("btca.amqp.user");
+        String pass = environment.getRequiredProperty("btca.amqp.password");
+        String vhost = environment.getRequiredProperty("btca.amqp.transactions.vhost");
 
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory(host);
         connectionFactory.setUsername(user);
@@ -60,7 +60,7 @@ public class AMQPConfig {
     public RabbitTemplate rabbitTemplate(Environment environment, ConnectionFactory connectionFactory, MessageConverter messageConverter) {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
         template.setMessageConverter(messageConverter);
-        template.setExchange(environment.getRequiredProperty("amqp.transactions.exchange"));
+        template.setExchange(environment.getRequiredProperty("btca.amqp.transactions.exchange"));
 
         return template;
     }
@@ -102,7 +102,7 @@ public class AMQPConfig {
      */
     @Bean
     public Exchange transactionsExchange(final Environment environment) {
-        String exchangeName = environment.getRequiredProperty("amqp.transactions.exchange");
+        String exchangeName = environment.getRequiredProperty("btca.amqp.transactions.exchange");
         Boolean durable = true;
         Boolean autoDelete = true;
 

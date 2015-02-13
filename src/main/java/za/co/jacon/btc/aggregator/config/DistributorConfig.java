@@ -56,7 +56,7 @@ public class DistributorConfig {
      */
     @Bean
     public Distributor<TransactionVO> mongodbPriceDistributor(final MongoClient mongoClient, final Environment environment) {
-        final String dbName = environment.getRequiredProperty("mongodb.db_name");
+        final String dbName = environment.getRequiredProperty("btca.mongodb.db_name");
         final DB mongodb = mongoClient.getDB(dbName);
 
         return new MongoPriceDistributor(mongodb);
@@ -68,9 +68,9 @@ public class DistributorConfig {
      */
     @Bean
     public StatsDClient statsDClient(Environment environment) {
-        final String statsdPrefix = environment.getRequiredProperty("statsd.prefix");
-        final String statsdHost = environment.getRequiredProperty("statsd.host");
-        final Integer statsdPort = environment.getRequiredProperty("statsd.port", Integer.class);
+        final String statsdPrefix = environment.getRequiredProperty("btca.statsd.prefix");
+        final String statsdHost = environment.getRequiredProperty("btca.statsd.host");
+        final Integer statsdPort = environment.getRequiredProperty("btca.statsd.port", Integer.class);
 
         return new NonBlockingStatsDClient(statsdPrefix, statsdHost, statsdPort);
     }
@@ -87,8 +87,8 @@ public class DistributorConfig {
     @Bean
     public MongoClient mongoClient(final Environment environment) throws UnknownHostException {
 
-        String host = environment.getRequiredProperty("mongodb.host");
-        Integer port = environment.getRequiredProperty("mongodb.port", Integer.class);
+        String host = environment.getRequiredProperty("btca.mongodb.host");
+        Integer port = environment.getRequiredProperty("btca.mongodb.port", Integer.class);
 
         MongoClient mongoClient = new MongoClient(
             Arrays.asList(
