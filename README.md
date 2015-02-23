@@ -42,4 +42,3 @@ docker run --name graphite -d -p 80:80 -p 2003:2003 -p 2004:2004 -p 7002:7002 -v
 | BTCA_MONGODB_HOST               | 127.0.0.1       |
 | BTCA_MONGODB_PORT               | 27017           |
 | BTCA_MONGODB_DB_NAME            | transactions    | 
-|---------------------------------|-----------------|
