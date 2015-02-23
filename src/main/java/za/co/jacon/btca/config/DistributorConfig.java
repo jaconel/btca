@@ -6,6 +6,8 @@ import com.mongodb.ServerAddress;
 import com.mongodb.WriteConcern;
 import com.timgroup.statsd.NonBlockingStatsDClient;
 import com.timgroup.statsd.StatsDClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +26,8 @@ import java.util.Arrays;
  */
 @Configuration
 public class DistributorConfig {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(DistributorConfig.class);
 
     /**
      * Configure a distributor which will distribute data via a amqp message queue.
@@ -54,6 +58,9 @@ public class DistributorConfig {
     @Bean
     public Distributor<TransactionVO> mongodbPriceDistributor(final MongoClient mongoClient, final Environment environment) {
         final String dbName = environment.getRequiredProperty("btca.mongodb.db_name");
+
+        LOGGER.info("Setting mongo database name to %s", dbName);
+
         final DB mongodb = mongoClient.getDB(dbName);
 
         return new MongoPriceDistributor(mongodb);
@@ -68,6 +75,13 @@ public class DistributorConfig {
         final String statsdPrefix = environment.getRequiredProperty("btca.statsd.prefix");
         final String statsdHost = environment.getRequiredProperty("btca.statsd.host");
         final Integer statsdPort = environment.getRequiredProperty("btca.statsd.port", Integer.class);
+
+        LOGGER.info(
+            String.format(
+                "Creating NonBlockingStatsDClient with the following parameters: prefix=%s | host=%s | port=%s",
+                statsdPrefix, statsdHost, statsdPort
+            )
+        );
 
         return new NonBlockingStatsDClient(statsdPrefix, statsdHost, statsdPort);
     }
@@ -86,6 +100,13 @@ public class DistributorConfig {
 
         String host = environment.getRequiredProperty("btca.mongodb.host");
         Integer port = environment.getRequiredProperty("btca.mongodb.port", Integer.class);
+
+        LOGGER.info(
+            String.format(
+                "Creating MongoClient with the following parameters: host=%s | port=%s",
+                host, port
+            )
+        );
 
         MongoClient mongoClient = new MongoClient(
             Arrays.asList(

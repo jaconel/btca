@@ -1,5 +1,7 @@
 package za.co.jacon.btca.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.TopicExchange;
@@ -21,6 +23,8 @@ import java.util.List;
 @Configuration
 public class AMQPConfig {
 
+    private static Logger LOGGER = LoggerFactory.getLogger(AMQPConfig.class);
+
     /**
      * Sets up the rabbitmq connection.
      *
@@ -33,12 +37,18 @@ public class AMQPConfig {
         String host = environment.getRequiredProperty("btca.amqp.host");
         String user = environment.getRequiredProperty("btca.amqp.user");
         String pass = environment.getRequiredProperty("btca.amqp.password");
+        int port = environment.getProperty("btca.amqp.port", Integer.class, 5672);
+
         String vhost = environment.getRequiredProperty("btca.amqp.transactions.vhost");
+
+
+        LOGGER.info(String.format("AQMP credentials are: username=%s | password=%s | host=%s | port=%s | vhost=%s", user, pass, host, port, vhost));
 
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory(host);
         connectionFactory.setUsername(user);
         connectionFactory.setPassword(pass);
         connectionFactory.setVirtualHost(vhost);
+        connectionFactory.setPort(port);
 
         return connectionFactory;
     }
@@ -102,6 +112,8 @@ public class AMQPConfig {
         String exchangeName = environment.getRequiredProperty("btca.amqp.transactions.exchange");
         Boolean durable = true;
         Boolean autoDelete = true;
+
+        LOGGER.info(String.format("Creating AMQP exchange %s as durable %s and autoDelete %s", exchangeName, durable, autoDelete));
 
         return new TopicExchange(exchangeName, durable, autoDelete);
     }
