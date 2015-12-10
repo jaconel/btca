@@ -1,4 +1,4 @@
-FROM dockerfile/java:oracle-java8
+FROM java:openjdk-8-jdk
 
 ADD ./target/dist/btca.tar.gz /opt/btca
 

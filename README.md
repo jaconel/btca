@@ -1,5 +1,7 @@
 # BTC Aggregator (btca)
 
+BTCA (pronounced bitca) is a java based application for accumulating bitcoin related information.
+
 # Development Environment
 
 ## Docker containers

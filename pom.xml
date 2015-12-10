@@ -24,7 +24,6 @@
         <statsd.client.version>3.0.2</statsd.client.version>
     </properties>
 
-
     <dependencies>
         <dependency>
           <groupId>junit</groupId>
@@ -236,7 +235,6 @@
                     <appendAssemblyId>false</appendAssemblyId>
                     <outputDirectory>target/dist</outputDirectory>
                 </configuration>
-                <!-- assemble during package phase -->
                 <executions>
                     <execution>
                         <id>service-assembly</id>

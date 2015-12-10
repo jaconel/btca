@@ -1,0 +1,41 @@
+#btca:
+#    build: .
+#    links:
+#     - mongodb
+#     - rabbitmq
+#     - statsd
+
+mongodb:
+    image: mongo
+    ports: 
+     - 27017:27017
+    volumes:
+     - /opt/docker/volumes/mongodb:/data/db
+
+rabbitmq:
+    image: rabbitmq
+    ports:
+     - 5672:5672
+     - 15672:15672
+    volumes:
+     - /opt/docker/volumes/rabbitmq:/data/mnesia
+
+graphite:
+    image: jaconel/graphite
+    ports: 
+     - 2003:2003
+     - 2004:2004
+     - 7002:7002
+    volumes:
+     - /opt/docker/volumes/graphite:/var/lib/graphite/storage/whisper
+
+statsd:
+    image: jaconel/statsd
+    ports:
+     - 8523:8523/udp
+    environment:
+     - STATSD_DEBUG:true
+     - STATSD_DUMP_MSG:true
+    links:
+     - graphite
+

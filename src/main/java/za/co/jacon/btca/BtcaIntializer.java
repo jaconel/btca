@@ -14,32 +14,33 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * Hello world!
- *
+ * Initialize the BTCA application.  
  */
 public class BtcaIntializer
 {
-
     public static final Logger LOGGER = LoggerFactory.getLogger(BtcaIntializer.class);
-
-
+    
+    /**
+     * Application main entry.
+     *
+     * @param args the application command line arguments
+     **/
     public static void main( String[] args )
     {
         new BtcaIntializer().run();
     }
-
+    
+    /**
+     * Initiate the logger and the application context.
+     **/
     public void run() {
         this.setupLogger();
         this.setupApplicationContext();
-
-        try {
-            Thread.sleep(1000000);
-        } catch (InterruptedException e) {
-            LOGGER.error("Thread sleep was interrupted.");
-            System.exit(1);
-        }
     }
 
+    /**
+     * Initiate the application loggin.
+     **/
     private void setupLogger() {
         InputStream loggingProperties = BtcaIntializer.class.getClassLoader().getResourceAsStream("Logging.properties");
         if (loggingProperties == null) {
@@ -50,6 +51,9 @@ public class BtcaIntializer
         LOGGER.info("Application logging configured.");
     }
 
+    /**
+     * Setup the spring context for the application. The application makes use of the annotation based context.
+     **/
     private void setupApplicationContext() {
         LOGGER.info("Setting up application context.");
 
@@ -64,6 +68,9 @@ public class BtcaIntializer
         LOGGER.info("Application context has been set up.");
     }
 
+    /**
+     * Sets up the configurable environment by attempting to load properties from the properties file on the classpath.
+     **/
     private ConfigurableEnvironment setupApplicationEnvironment() {
         Properties properties = null;
         ConfigurableEnvironment environment = null;
